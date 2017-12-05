@@ -1,0 +1,29 @@
+<div class="row list-item">
+  <table>
+    <tr>
+      <td ng-click="open()">
+        <h4>{{ persona.name }}</h4>
+      </td>
+      <td class="right">
+        <div ng-if="isOwner()">
+          <a href class="board-entry-action" ng-if="!isDeleting" ng-click="edit()">
+            <span class="glyphicon glyphicon-wrench"></span>
+          </a>
+          <a href class="board-entry-action" ng-if="!isDeleting" ng-click="startDeleting()">
+            <span class="glyphicon glyphicon-trash"></span>
+          </a>
+
+          <!-- Deleting -->
+          <a href class="board-entry-action board-entry-action-delete" ng-if="isDeleting" ng-click="delete()">
+            <span class="glyphicon glyphicon-ok"></span>
+          </a>
+          <a href class="board-entry-action board-entry-action-cancel" ng-if="isDeleting" ng-click="cancelDeleting()">
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
+        </div>
+      </td>
+    </tr>
+    <tr>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,59 @@
+<div class="row list-item">
+  <table>
+    <tr>
+      <td>
+        <h5>{{ userstory.epic }}</h5>
+      </td>
+      <td class="right">
+        <div ng-if="isOwner()">
+          <a href class="board-entry-action" ng-if="!isDeleting" ng-click="edit()">
+            <span class="glyphicon glyphicon-wrench"></span>
+          </a>
+          <a href class="board-entry-action" ng-if="!isDeleting" ng-click="startDeleting()">
+            <span class="glyphicon glyphicon-trash"></span>
+          </a>
+
+          <!-- Deleting -->
+          <a href class="board-entry-action board-entry-action-delete" ng-if="isDeleting" ng-click="delete()">
+            <span class="glyphicon glyphicon-ok"></span>
+          </a>
+          <a href class="board-entry-action board-entry-action-cancel" ng-if="isDeleting" ng-click="cancelDeleting()">
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <span>As
+          <span ng-repeat="persona in userstory.personas">
+            <a href=""> {{ persona.title }}</a>,
+          </span>
+        </span>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <span>{{ personalPronoun() }} want {{ userstory.goal }}</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <span>so that {{ userstory.reason }}</span>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <h5>Acceptance Criteria</h5>
+        <ul>
+          <li ng-repeat="ac in userstory.acceptanceCriteria">{{ ac }}</li>
+        </ul>
+      </td>
+    </tr>
+
+  </table>
+</div>

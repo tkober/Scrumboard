@@ -1,0 +1,104 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <!-- TODO: Fix in css -->
+        <span style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif;"> {{ scrum.name }}</span>
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-left">
+
+        <!-- Sprint Board -->
+        <li class="menu-item" ng-class="{ active: view == SPRINT_BOARD }">
+          <a href ng-click="view = SPRINT_BOARD"><span class="glyphicon glyphicon-th"></span> Sprint Board</a>
+        </li>
+
+        <!-- Retrospective -->
+        <li class="menu-item" ng-class="{ active: view == RETROSPECTIVE }">
+          <a href ng-click="view = RETROSPECTIVE"><span class="glyphicon glyphicon-comment"></span> Retrospective</a>
+        </li>
+
+        <!-- Retrospective -->
+        <li class="menu-item" ng-class="{ active: view == BURNDOWN }">
+          <a href ng-click="view = BURNDOWN"><span class="glyphicon glyphicon-stats"></span> Burndown</a>
+        </li>
+
+        <!-- Start Sprint -->
+        <li class="menu-item" ng-if="!scrum.currentSprint">
+          <a href ng-click=""><span class="glyphicon glyphicon-play"></span> Start Sprint</a>
+        </li>
+
+        <!-- Stop Sprint -->
+        <li class="menu-item" ng-if="scrum.currentSprint">
+          <a href ng-click=""><span class="glyphicon glyphicon-stop"></span> End Sprint</a>
+        </li>
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+
+        <!-- Backlog -->
+        <li class="menu-item" ng-class="{ active: view == BACKLOG }">
+          <a href ng-click="view = BACKLOG"><span class="glyphicon glyphicon-th-list"></span> Backlog</a>
+        </li>
+
+        <!-- Personas -->
+        <li class="menu-item" ng-class="{ active: view == PERSONAS }">
+          <a href ng-click="view = PERSONAS"><span class="glyphicon glyphicon-user"></span> Personas</a>
+        </li>
+
+        <!-- History -->
+        <li class="menu-item" ng-class="{ active: view == HISTORY }">
+          <a href ng-click="view = HISTORY"><span class="glyphicon glyphicon-folder-open"></span> History</a>
+        </li>
+
+        <!-- Logout -->
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ email() }} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href ng-click="logout()">Logout</a>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Sprint Board -->
+<div class="" ng-if="view == SPRINT_BOARD">
+  <h3>Sprint Board</h3>
+</div>
+
+<!-- Retrospective -->
+<div class="" ng-if="view == RETROSPECTIVE">
+  <h3>Retrospective</h3>
+</div>
+
+<!-- Burndown -->
+<div class="" ng-if="view == BURNDOWN">
+  <h3>Burndown</h3>
+</div>
+
+<!-- Backlog -->
+<backlog class="" ng-if="view == BACKLOG" scrum="scrum"></backlog>
+
+<!-- Personas -->
+<personas ng-if="view == PERSONAS" scrum="scrum"></personas>
+
+<!-- History -->
+<div class="" ng-if="view == HISTORY">
+  <h3>History</h3>
+</div>
