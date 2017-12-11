@@ -34,14 +34,22 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
   };
 
   $scope.estimate = function(estimate) {
-    // $scope.userstory.estimates[Meteor.userId()] = estimate;
     Meteor.call('scrums.userstories.estimate', $scope.scrum._id, $scope.userstory.id, estimate, (error) => {
-      if (error) {
-        console.log(error);
-        $scope.error = error;
-      } else {
-        
-      }
+      $scope.error = error;
+      $scope.$apply();
+    });
+  };
+
+  $scope.increase_priority = function() {
+    Meteor.call('scrums.userstories.upvote', $scope.scrum._id, $scope.userstory.id, (error) => {
+      $scope.error = error;
+      $scope.$apply();
+    });
+  };
+
+  $scope.decrease_priority = function() {
+    Meteor.call('scrums.userstories.downvote', $scope.scrum._id, $scope.userstory.id, (error) => {
+      $scope.error = error;
       $scope.$apply();
     });
   };

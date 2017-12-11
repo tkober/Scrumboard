@@ -264,6 +264,66 @@ if (Meteor.isServer) {
           }
         }
       );
+    },
+
+    'scrums.userstories.upvote' (scrumId, storyId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      scrum = Scrums.findOne({ _id: scrumId, owner: Meteor.userId() });
+      if (!scrum) {
+        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
+      }
+
+      for (var i = 1; i < scrum.backlog.length; i++) {
+        if (scrum.backlog[i].id == storyId) {
+          var temp = scrum.backlog[i];
+          scrum.backlog[i] = scrum.backlog[i-1];
+          scrum.backlog[i-1] = temp;
+          break;
+        }
+      }
+
+      Scrums.update(
+        {
+          _id: scrumId
+        }, {
+          $set: {
+            'backlog': scrum.backlog
+          }
+        }
+      );
+    },
+
+    'scrums.userstories.downvote' (scrumId, storyId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      scrum = Scrums.findOne({ _id: scrumId, owner: Meteor.userId() });
+      if (!scrum) {
+        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
+      }
+
+      for (var i = 0; i < scrum.backlog.length-1; i++) {
+        if (scrum.backlog[i].id == storyId) {
+          var temp = scrum.backlog[i];
+          scrum.backlog[i] = scrum.backlog[i+1];
+          scrum.backlog[i+1] = temp;
+          break;
+        }
+      }
+
+      Scrums.update(
+        {
+          _id: scrumId
+        }, {
+          $set: {
+            'backlog': scrum.backlog
+          }
+        }
+      );
     }
 
   });
