@@ -210,13 +210,49 @@ if (Meteor.isServer) {
 
       storyId = storyIdForScrum(scrum);
       story = {
+        'id': storyId,
         'epic': epic,
         'personas': JSON.parse(personas),
         'acceptanceCriteria': JSON.parse(acceptanceCriteria),
         'goal': goal,
-        'reason': reason
+        'reason': reason,
+        'estimates': {}
       };
       scrum.backlog.push(story);
+
+      Scrums.update(
+        {
+          _id: scrumId,
+          owner: Meteor.userId()
+        }, {
+          $set: {
+            'backlog': scrum.backlog
+          }
+        }
+      );
+    },
+
+    'scrums.userstories.estimate' (scrumId, storyId, estimate) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      scrum = Scrums.findOne({ _id: scrumId, owner: Meteor.userId() });
+      if (!scrum) {
+        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
+      }
+
+      var story = null;
+      for (var i = 0; i < scrum.backlog.length; i++) {
+        s = scrum.backlog[i];
+        if (s.id === storyId) {
+          story = s;
+        }
+      }
+      if (story == null) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id');
+      }
+      story.estimates[Meteor.userId()] = estimate;
 
       Scrums.update(
         {
