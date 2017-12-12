@@ -93,7 +93,8 @@ if (Meteor.isServer) {
         createdAt: Date.now(),
         participants: JSON.parse(participants),
         personas: [],
-        backlog: []
+        backlog: [],
+        sprint: null
       });
     },
 
@@ -321,6 +322,34 @@ if (Meteor.isServer) {
         }, {
           $set: {
             'backlog': scrum.backlog
+          }
+        }
+      );
+    },
+
+    'scrums.sprint.start_planning' (scrumId, planningParticipants) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      scrum = Scrums.findOne({ _id: scrumId, owner: Meteor.userId() });
+      if (!scrum) {
+        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
+      }
+
+      if (scrum.sprint != null) {
+        throw new Meteor.Error(400, 'There is already a pending sprint');
+      }
+
+      Scrums.update(
+        {
+          _id: scrumId
+        }, {
+          $set: {
+            'sprint': {
+              'status': 'planning',
+              'planningParticipants': JSON.parse(planningParticipants)
+            }
           }
         }
       );

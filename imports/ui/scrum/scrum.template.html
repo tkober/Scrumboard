@@ -19,27 +19,27 @@
       <ul class="nav navbar-nav navbar-left">
 
         <!-- Sprint Board -->
-        <li class="menu-item" ng-class="{ active: view == SPRINT_BOARD }">
+        <li class="menu-item" ng-class="{ active: view == SPRINT_BOARD }" ng-show="hasActiveSprint()">
           <a href ng-click="view = SPRINT_BOARD"><span class="glyphicon glyphicon-th"></span> Sprint Board</a>
         </li>
 
         <!-- Retrospective -->
-        <li class="menu-item" ng-class="{ active: view == RETROSPECTIVE }">
+        <li class="menu-item" ng-class="{ active: view == RETROSPECTIVE }" ng-show="hasActiveSprint()">
           <a href ng-click="view = RETROSPECTIVE"><span class="glyphicon glyphicon-comment"></span> Retrospective</a>
         </li>
 
-        <!-- Retrospective -->
-        <li class="menu-item" ng-class="{ active: view == BURNDOWN }">
+        <!-- Burndown -->
+        <li class="menu-item" ng-class="{ active: view == BURNDOWN }" ng-show="hasActiveSprint()">
           <a href ng-click="view = BURNDOWN"><span class="glyphicon glyphicon-stats"></span> Burndown</a>
         </li>
 
-        <!-- Start Sprint -->
-        <li class="menu-item" ng-if="!scrum.currentSprint">
-          <a href ng-click=""><span class="glyphicon glyphicon-play"></span> Start Sprint</a>
+        <!-- Plan Sprint -->
+        <li class="menu-item" ng-class="{ active: view == SPRINT_PLANNING }" ng-show="!hasActiveSprint()">
+          <a href ng-click="view = SPRINT_PLANNING"><span class="glyphicon glyphicon-repeat"></span> Plan Sprint</a>
         </li>
 
         <!-- Stop Sprint -->
-        <li class="menu-item" ng-if="scrum.currentSprint">
+        <li class="menu-item" ng-show="hasActiveSprint()">
           <a href ng-click=""><span class="glyphicon glyphicon-stop"></span> End Sprint</a>
         </li>
 
@@ -77,28 +77,35 @@
   </div>
 </nav>
 
-<!-- Sprint Board -->
-<div class="" ng-if="view == SPRINT_BOARD">
-  <h3>Sprint Board</h3>
-</div>
+<div ng-if="scrum">
 
-<!-- Retrospective -->
-<div class="" ng-if="view == RETROSPECTIVE">
-  <h3>Retrospective</h3>
-</div>
+  <!-- Sprint Planning -->
+  <planning ng-if="view == SPRINT_PLANNING" scrum="scrum"></planning>
 
-<!-- Burndown -->
-<div class="" ng-if="view == BURNDOWN">
-  <h3>Burndown</h3>
-</div>
+  <!-- Sprint Board -->
+  <div class="" ng-if="view == SPRINT_BOARD">
+    <h3>Sprint Board</h3>
+  </div>
 
-<!-- Backlog -->
-<backlog class="" ng-if="view == BACKLOG" scrum="scrum"></backlog>
+  <!-- Retrospective -->
+  <div class="" ng-if="view == RETROSPECTIVE">
+    <h3>Retrospective</h3>
+  </div>
 
-<!-- Personas -->
-<personas ng-if="view == PERSONAS" scrum="scrum"></personas>
+  <!-- Burndown -->
+  <div class="" ng-if="view == BURNDOWN">
+    <h3>Burndown</h3>
+  </div>
 
-<!-- History -->
-<div class="" ng-if="view == HISTORY">
-  <h3>History</h3>
+  <!-- Backlog -->
+  <backlog class="" ng-if="view == BACKLOG" scrum="scrum"></backlog>
+
+  <!-- Personas -->
+  <personas ng-if="view == PERSONAS" scrum="scrum"></personas>
+
+  <!-- History -->
+  <div class="" ng-if="view == HISTORY">
+    <h3>History</h3>
+  </div>
+
 </div>

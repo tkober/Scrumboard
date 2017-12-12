@@ -9,7 +9,8 @@ angular.module('scrumboard').directive('backlogEntry', function() {
     controller: 'BacklogEntryController',
     scope: {
       userstory: '=',
-      scrum: '='
+      scrum: '=',
+      planning: '='
     }
   };
 });

@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-6">
+
+    <!-- Header -->
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>Sprint Planning</h2>
+      </div>
+    </div>
+
+    <div ng-if="!planningStarted()">
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Timeline</h5>
+        </div>
+      </div>
+
+      <!-- From / To -->
+      <div class="row">
+
+        <div class="col-xs-6">
+          <div class="input-group">
+            <span class="input-group-addon">From</span>
+            <input type="date" class="form-control" placeholder="Sprint begins" ng-model="from">
+          </div>
+        </div>
+
+        <div class="col-xs-6">
+          <div class="input-group">
+            <span class="input-group-addon">To</span>
+            <input type="date" class="form-control" placeholder="Sprint ends" ng-model="to">
+          </div>
+        </div>
+      </div>
+
+      <!-- Header -->
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Planning Participants</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <div ng-repeat="p in allParticipants">
+            <input type="checkbox" aria-label="..." ng-model="participatesInPlanning[p.id]">
+            <span>{{ p.name }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 right">
+          <button class="btn btn-success" ng-click="startPlanning()" ng-disabled="!isValid()">
+            <span class="glyphicon glyphicon-play"></span> Start Planning
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div ng-if="planningStarted()">
+      <backlog-entry ng-repeat="story in scrum.backlog" userstory="story" scrum="scrum" planning="true"></backlog-entry>
+
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+          <div class="container">
+              <div class="navbar-header">
+                  <span class="navbar-brand">Ok Bye</span>
+              </div>
+
+              <button class="btn btn-success" ng-click="startPlanning()" ng-disabled="!isValid()">
+                <span class="glyphicon glyphicon-play"></span> Start Sprint
+              </button>
+          </div>
+      </nav>
+    </div>
+
+  </div>
+  <div class="col-md-3">
+  </div>
+</div>
