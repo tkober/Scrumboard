@@ -48,7 +48,7 @@
       <ul class="nav navbar-nav navbar-right">
 
         <!-- Backlog -->
-        <li class="menu-item" ng-class="{ active: view == BACKLOG }">
+        <li class="menu-item" ng-class="{ active: view == BACKLOG }" ng-show="!hasNotStartedSprint()">
           <a href ng-click="view = BACKLOG"><span class="glyphicon glyphicon-th-list"></span> Backlog</a>
         </li>
 

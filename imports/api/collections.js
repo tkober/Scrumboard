@@ -437,9 +437,22 @@ if (Meteor.isServer) {
         throw new Meteor.Error(400, 'The pending sprint cannot be started');
       }
 
+      var sprint_backlog = [];
+      for (var i = 0; i < scrum.backlog.length; i++) {
+        var story = scrum.backlog[i];
+        if (scrum.sprint.backlog.indexOf(story.id) != -1) {
+          story.estimate = story.estimates[Meteor.userId()];
+          sprint_backlog.push(story);
+          scrum.backlog.splice(i, 1)
+          i--;
+        }
+      }
+
       Scrums.update(scrumUpdateSelector(scrumId), {
           $set: {
-            'sprint.status': 'active'
+            'sprint.status': 'active',
+            'sprint.backlog': sprint_backlog,
+            'backlog': scrum.backlog
           }
         }
       );

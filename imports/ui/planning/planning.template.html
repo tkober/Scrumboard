@@ -73,10 +73,18 @@
                 </div>
                 <ul class="nav navbar-nav navbar-right">
                   <li>
-                    <a href ng-click="cancelSprintPlanning()"><span class="glyphicon glyphicon-remove"></span> Cancel Planning</a>
+                    <p class="navbar-btn">
+                      <a href ng-click="startSprint()" class="btn btn-success" ng-disabled="!isValidSprint()">
+                        <span class="glyphicon glyphicon-play"></span> Start Sprint
+                      </a>
+                    </p>
                   </li>
                   <li>
-                    <a href ng-click="startSprint()"><span class="glyphicon glyphicon-play"></span> Start Sprint</a>
+                    <p class="navbar-btn">
+                      <a href ng-click="cancelSprintPlanning()" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove"></span> Cancel Planning
+                      </a>
+                    </p>
                   </li>
                 </ul>
             </div>

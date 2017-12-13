@@ -73,10 +73,12 @@ angular.module('scrumboard').controller('PlanningController', ['$scope', '$locat
   };
 
   $scope.startSprint = function() {
-    Meteor.call('scrums.sprint.start', $scope.scrum._id, (error) => {
-      $scope.error = error;
-      $scope.$apply();
-    });
+    if ($scope.isValidSprint()) {
+      Meteor.call('scrums.sprint.start', $scope.scrum._id, (error) => {
+        $scope.error = error;
+        $scope.$apply();
+      });
+    }
   };
 
   $scope.cancelSprintPlanning = function() {
@@ -85,5 +87,9 @@ angular.module('scrumboard').controller('PlanningController', ['$scope', '$locat
       $scope.$apply();
     });
   };
+
+  $scope.isValidSprint = function() {
+    return $scope.scrum.sprint.backlog.length > 0;
+  }
 
 }]);
