@@ -56,4 +56,34 @@ angular.module('scrumboard').controller('PlanningController', ['$scope', '$locat
     return $scope.scrum.sprint && $scope.scrum.sprint.status == 'planning';
   };
 
+  $scope.isPartOfPlanning = function() {
+    return $scope.scrum.sprint.planningParticipants.indexOf(Meteor.userId()) > -1;
+  }
+
+  $scope.sprintBacklogEstimate = function() {
+    var result = 0;
+    for (var i = 0; i < $scope.scrum.backlog.length; i++) {
+      var story = $scope.scrum.backlog[i];
+      if ($scope.scrum.sprint.backlog.indexOf(story.id) != -1) {
+        // console.log(story.id);
+        result += story.estimates[Meteor.userId()];
+      }
+    }
+    return result;
+  };
+
+  $scope.startSprint = function() {
+    Meteor.call('scrums.sprint.start', $scope.scrum._id, (error) => {
+      $scope.error = error;
+      $scope.$apply();
+    });
+  };
+
+  $scope.cancelSprintPlanning = function() {
+    Meteor.call('scrums.sprint.cancel_planning', $scope.scrum._id, (error) => {
+      $scope.error = error;
+      $scope.$apply();
+    });
+  };
+
 }]);

@@ -62,19 +62,31 @@
     </div>
 
     <div ng-if="planningStarted()">
-      <backlog-entry ng-repeat="story in scrum.backlog" userstory="story" scrum="scrum" planning="true"></backlog-entry>
 
-      <nav class="navbar navbar-default navbar-fixed-bottom">
-          <div class="container">
-              <div class="navbar-header">
-                  <span class="navbar-brand">Ok Bye</span>
-              </div>
+      <div ng-if="isPartOfPlanning()">
+        <backlog-entry ng-repeat="story in scrum.backlog" userstory="story" scrum="scrum" planning="true"></backlog-entry>
 
-              <button class="btn btn-success" ng-click="startPlanning()" ng-disabled="!isValid()">
-                <span class="glyphicon glyphicon-play"></span> Start Sprint
-              </button>
-          </div>
-      </nav>
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <div class="navbar-header">
+                    <span class="navbar-brand">{{ sprintBacklogEstimate() }} spts</span>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <a href ng-click="cancelSprintPlanning()"><span class="glyphicon glyphicon-remove"></span> Cancel Planning</a>
+                  </li>
+                  <li>
+                    <a href ng-click="startSprint()"><span class="glyphicon glyphicon-play"></span> Start Sprint</a>
+                  </li>
+                </ul>
+            </div>
+        </nav>
+      </div>
+
+      <div ng-if="!isPartOfPlanning()">
+        <h3>You are not part of the planning</h3>
+      </div>
+
     </div>
 
   </div>

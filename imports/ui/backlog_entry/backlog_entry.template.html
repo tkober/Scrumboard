@@ -5,16 +5,22 @@
         <h5>{{ userstory.epic }}</h5>
       </td>
       <td class="right">
-        <a href class="board-entry-action" ng-if="!isDeleting" ng-click="increase_priority()">
-          <span class="glyphicon glyphicon-chevron-up"></span></a>
-        <a href class="board-entry-action" ng-if="!isDeleting" ng-click="decrease_priority()"><span class="glyphicon glyphicon-chevron-down"></span></a>
+        <a href ng-if="canAddToBacklog()" ng-click="addToSprintBacklog()"><span class="glyphicon glyphicon-ok-circle"></span></a>
+        <a href ng-if="canRemoveFromBacklog()" ng-click="removeFromSprintBacklog()"><span class="glyphicon glyphicon-ban-circle"></span></a>
+
+        <a href ng-click="increase_priority()"><span class="glyphicon glyphicon-chevron-up"></span></a>
+        <a href ng-click="decrease_priority()"><span class="glyphicon glyphicon-chevron-down"></span></a>
       </td>
       <td class="right">
-        <div class="dropdown">
+        <div class="dropdown" ng-class="{ disabled: isInSprintBacklog() }">
           <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="glyphicon glyphicon-option-vertical"></span>
           </button>
+
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li ng-if="planning">
+              <a href ng-click="resetEstimate()"><span class="glyphicon glyphicon-repeat"></span> Reset estimates</a>
+            </li>
             <li>
               <a href=""><span class="glyphicon glyphicon-wrench"></span> Edit</a>
             </li>
@@ -61,9 +67,27 @@
     <tr>
       <td>
         <h5>Estimate</h5>
-        <div class="btn-group" role="group" aria-label="...">
+
+        <div class="btn-group" role="group" aria-label="..." ng-if="showEstimatePanel()">
           <button type="button" class="btn btn-default" ng-class="{ active: isMyEstimate(e) }" ng-repeat="e in ESTIMATES" ng-click="estimate(e)">{{ e }}</button>
         </div>
+
+        <div class="" ng-if="!showEstimatePanel() && missingEstimatesCount() > 0">
+          <span>{{ missingEstimatesCount() }} {{ missingEstimatesCount() > 1 ? "persons" : "person" }} pending</span>
+        </div>
+
+        <div class="" ng-if="!showEstimatePanel() && missingEstimatesCount() == 0">
+          <div ng-if="!compliantEstimate()">
+            <span>{{ minimumEstimate() }}</span>
+            <span> - </span>
+            <span>{{ maximumEstimate() }}</span>
+          </div>
+          <div ng-if="compliantEstimate()">
+            <span>{{ minimumEstimate() }}</span>
+            <span> spts</span>
+          </div>
+        </div>
+
       </td>
     </tr>
 

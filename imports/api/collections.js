@@ -5,6 +5,30 @@ export const Scrums = new Mongo.Collection('scrums');
 
 if (Meteor.isServer) {
 
+  var scrumUpdateSelector = function(id) {
+    return {
+      '$and': [
+        {
+          _id: id
+        },
+        {
+          '$or': [
+            { owner: Meteor.userId() },
+            { participants: Meteor.userId() }
+          ]
+        }
+      ]
+    };
+  };
+
+  var getScrum = function(id) {
+    var result = Scrums.findOne(scrumUpdateSelector(id));
+    if (!result) {
+      throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
+    }
+    return result;
+  };
+
   storyIdForScrum = function(scrum) {
     guid = function() {
       function S4() {
@@ -103,23 +127,7 @@ if (Meteor.isServer) {
         throw new Meteor.Error('not-authorized');
       }
 
-      scrum = Scrums.findOne({
-        '$and': [
-          {
-            _id: id
-          },
-          {
-            '$or': [
-              { owner: Meteor.userId() },
-              { participants: Meteor.userId() }
-            ]
-          }
-        ]
-      });
-
-      if (!scrum) {
-        throw new Meteor.Error(400, 'The requested scrum either does not exist or you do not have the requiered permission!');
-      }
+      scrum = getScrum(id);
       return scrum;
     },
 
@@ -128,11 +136,8 @@ if (Meteor.isServer) {
         throw new Meteor.Error('not-authorized');
       }
 
-      scrum = Scrums.findOne({ _id: id, owner: Meteor.userId() });
-      if (!scrum) {
-        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
-      }
-
+      // Ceck permission
+      scrum = getScrum(id);
       Scrums.update(
         {
           _id: id,
@@ -151,10 +156,8 @@ if (Meteor.isServer) {
         throw new Meteor.Error('not-authorized');
       }
 
-      scrum = Scrums.findOne({ _id: id, owner: Meteor.userId() });
-      if (!scrum) {
-        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
-      }
+      // Ceck permission
+      scrum = getScrum(id);
 
       Scrums.remove({
         _id: id,
@@ -167,10 +170,8 @@ if (Meteor.isServer) {
         throw new Meteor.Error('not-authorized');
       }
 
-      scrum = Scrums.findOne({ _id: scrumId, owner: Meteor.userId() });
-      if (!scrum) {
-        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
-      }
+      // Ceck permission
+      scrum = getScrum(scrumId);
 
       for (i = 0; i < scrum.personas.length; i++) {
         persona = scrum.personas[i];
@@ -182,11 +183,7 @@ if (Meteor.isServer) {
       persona = { 'name': name };
       scrum.personas.push(persona);
 
-      Scrums.update(
-        {
-          _id: scrumId,
-          owner: Meteor.userId()
-        }, {
+      Scrums.update(scrumUpdateSelector(scrumId), {
           $set: {
             'personas': scrum.personas
           }
@@ -204,10 +201,8 @@ if (Meteor.isServer) {
         throw new Meteor.Error('not-authorized');
       }
 
-      scrum = Scrums.findOne({ _id: scrumId, owner: Meteor.userId() });
-      if (!scrum) {
-        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
-      }
+      // Ceck permission
+      scrum = getScrum(scrumId);
 
       storyId = storyIdForScrum(scrum);
       story = {
@@ -221,11 +216,7 @@ if (Meteor.isServer) {
       };
       scrum.backlog.push(story);
 
-      Scrums.update(
-        {
-          _id: scrumId,
-          owner: Meteor.userId()
-        }, {
+      Scrums.update(scrumUpdateSelector(scrumId), {
           $set: {
             'backlog': scrum.backlog
           }
@@ -238,10 +229,8 @@ if (Meteor.isServer) {
         throw new Meteor.Error('not-authorized');
       }
 
-      scrum = Scrums.findOne({ _id: scrumId, owner: Meteor.userId() });
-      if (!scrum) {
-        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
-      }
+      // Ceck permission
+      scrum = getScrum(scrumId);
 
       var story = null;
       for (var i = 0; i < scrum.backlog.length; i++) {
@@ -255,11 +244,7 @@ if (Meteor.isServer) {
       }
       story.estimates[Meteor.userId()] = estimate;
 
-      Scrums.update(
-        {
-          _id: scrumId,
-          owner: Meteor.userId()
-        }, {
+      Scrums.update(scrumUpdateSelector(scrumId), {
           $set: {
             'backlog': scrum.backlog
           }
@@ -272,10 +257,8 @@ if (Meteor.isServer) {
         throw new Meteor.Error('not-authorized');
       }
 
-      scrum = Scrums.findOne({ _id: scrumId, owner: Meteor.userId() });
-      if (!scrum) {
-        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
-      }
+      // Ceck permission
+      scrum = getScrum(scrumId);
 
       for (var i = 1; i < scrum.backlog.length; i++) {
         if (scrum.backlog[i].id == storyId) {
@@ -286,10 +269,7 @@ if (Meteor.isServer) {
         }
       }
 
-      Scrums.update(
-        {
-          _id: scrumId
-        }, {
+      Scrums.update(scrumUpdateSelector(scrumId), {
           $set: {
             'backlog': scrum.backlog
           }
@@ -302,10 +282,8 @@ if (Meteor.isServer) {
         throw new Meteor.Error('not-authorized');
       }
 
-      scrum = Scrums.findOne({ _id: scrumId, owner: Meteor.userId() });
-      if (!scrum) {
-        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
-      }
+      // Ceck permission
+      scrum = getScrum(scrumId);
 
       for (var i = 0; i < scrum.backlog.length-1; i++) {
         if (scrum.backlog[i].id == storyId) {
@@ -316,10 +294,7 @@ if (Meteor.isServer) {
         }
       }
 
-      Scrums.update(
-        {
-          _id: scrumId
-        }, {
+      Scrums.update(scrumUpdateSelector(scrumId), {
           $set: {
             'backlog': scrum.backlog
           }
@@ -332,24 +307,163 @@ if (Meteor.isServer) {
         throw new Meteor.Error('not-authorized');
       }
 
-      scrum = Scrums.findOne({ _id: scrumId, owner: Meteor.userId() });
-      if (!scrum) {
-        throw new Meteor.Error(401, 'You do not have the requiered permission to perform this action!');
-      }
+      // Ceck permission
+      scrum = getScrum(scrumId);
 
       if (scrum.sprint != null) {
         throw new Meteor.Error(400, 'There is already a pending sprint');
       }
 
-      Scrums.update(
-        {
-          _id: scrumId
-        }, {
+      Scrums.update(scrumUpdateSelector(scrumId), {
           $set: {
             'sprint': {
               'status': 'planning',
-              'planningParticipants': JSON.parse(planningParticipants)
+              'planningParticipants': JSON.parse(planningParticipants),
+              'backlog': []
             }
+          }
+        }
+      );
+    },
+
+    'scrums.userstories.reset_estimate' (scrumId, storyId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      var story = null;
+      for (var i = 0; i < scrum.backlog.length; i++) {
+        s = scrum.backlog[i];
+        if (s.id === storyId) {
+          story = s;
+        }
+      }
+      if (story == null) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id');
+      }
+      story.estimates = {};
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'backlog': scrum.backlog
+          }
+        }
+      );
+    },
+
+    'scrums.sprint.backlog.add' (scrumId, storyId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      var story = null;
+      for (var i = 0; i < scrum.backlog.length; i++) {
+        s = scrum.backlog[i];
+        if (s.id === storyId) {
+          story = s;
+        }
+      }
+      if (story == null) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id');
+      }
+
+      var backlog = scrum.sprint.backlog;
+      if (backlog.indexOf(storyId) != -1) {
+        throw new Meteor.Error(400, 'A reference with the given id already exists in the sprint backlog');
+      }
+      backlog.push(storyId);
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'sprint.backlog': backlog
+          }
+        }
+      );
+    },
+
+    'scrums.sprint.backlog.remove' (scrumId, storyId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      var story = null;
+      for (var i = 0; i < scrum.backlog.length; i++) {
+        s = scrum.backlog[i];
+        if (s.id === storyId) {
+          story = s;
+        }
+      }
+      if (story == null) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id');
+      }
+
+      var backlog = scrum.sprint.backlog;
+      var index = backlog.indexOf(storyId);
+      if (index == -1) {
+        throw new Meteor.Error(400, 'The story with the spacified id has not been added to the sprint backlog yet');
+      }
+
+      backlog.splice(index, 1);
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'sprint.backlog': backlog
+          }
+        }
+      );
+    },
+
+    'scrums.sprint.start' (scrumId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      if (scrum.sprint == null) {
+        throw new Meteor.Error(400, 'There is no pending sprint');
+      }
+
+      if (scrum.sprint.status != 'planning') {
+        throw new Meteor.Error(400, 'The pending sprint cannot be started');
+      }
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'sprint.status': 'active'
+          }
+        }
+      );
+    },
+
+    'scrums.sprint.cancel_planning' (scrumId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      if (scrum.sprint == null) {
+        throw new Meteor.Error(400, 'There is no pending sprint');
+      }
+
+      if (scrum.sprint.status != 'planning') {
+        throw new Meteor.Error(400, 'The pending sprint cannot be canceled');
+      }
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'sprint': null
           }
         }
       );
