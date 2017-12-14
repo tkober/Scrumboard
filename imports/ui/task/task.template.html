@@ -1,0 +1,48 @@
+<div class="list-group">
+  <li class="list-group-item">
+    <table style="width: 100%">
+      <tr>
+        <td>
+          <label>{{ task.difficulty }}</label>
+        </td>
+        <td class="right">
+          <div class="dropdown">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span class="glyphicon glyphicon-option-vertical"></span>
+            </button>
+
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Move task to</li>
+              <li ng-if="taskStatus != 'todo'">
+                <a href ng-click="moveTask('todo')"><span class="glyphicon glyphicon-share-alt"></span> TODO</a>
+              </li>
+              <li ng-if="taskStatus != 'inProgress'">
+                <a href ng-click="moveTask('inProgress')"><span class="glyphicon glyphicon-share-alt"></span> In Progress</a>
+              </li>
+              <li ng-if="taskStatus != 'review'">
+                <a href ng-click="moveTask('review')"><span class="glyphicon glyphicon-share-alt"></span> Review</a>
+              </li>
+              <li ng-if="taskStatus != 'done'">
+                <a href ng-click="moveTask('done')"><span class="glyphicon glyphicon-share-alt"></span> Done</a>
+              </li>
+              <li role="separator" class="divider"></li>
+              <li>
+                <a href><span class="glyphicon glyphicon-trash"></span> Delete</a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <span>{{ task.text }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p ng-repeat="worker in task.workers"><label>{{ worker }}</label></p>
+        </td>
+      </tr>
+    </table>
+  </li>
+</div>

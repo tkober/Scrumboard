@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-xs-12">
+    <span>{{ story.estimate }}</span>
+    <span>{{ story.epic }}</span>
+    <span>As <a href="" ng-repeat="persona in story.personas"> {{ persona.title }}</a> {{ personalPronoun() }} want {{ story.goal }}</span>
+  </div>
+</div>
+<div class="row">
+
+  <!-- TO DO -->
+  <div class="col-xs-3">
+
+    <task scrum="scrum" story="story" task="task" ng-repeat="task in story.tasks.todo" task-status="todo" index="$index"></task>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-info" ng-click="createTask()" ng-disabled="addTask()">
+          <span class="glyphicon glyphicon-edit"></span> Add Task
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- In progress -->
+  <div class="col-xs-3">
+    <task scrum="scrum" story="story" task="task" ng-repeat="task in story.tasks.inProgress" task-status="inProgress" index="$index"></task>
+  </div>
+
+  <!-- Review -->
+  <div class="col-xs-3">
+    <task scrum="scrum" story="story" task="task" ng-repeat="task in story.tasks.review" task-status="review" index="$index"></task>
+  </div>
+
+  <!-- Done -->
+  <div class="col-xs-3">
+    <task scrum="scrum" story="story" task="task" ng-repeat="task in story.tasks.done" task-status="done" index="$index"></task>
+  </div>
+
+</div>
+
+<div id="createTaskModal_{{story.id}}" class="modal fade noselect" role="dialog">
+  <div class="modal-dialog result-modal">
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create Task</h4>
+
+      </div>
+      <div class="modal-body">
+        <label>Description</label>
+        <textarea class="form-control" rows="2" ng-model="taskDescription"></textarea>
+
+        <label>Difficulty</label>
+        <div class="list-group">
+          <a href ng-repeat="d in DIFFICULTIES"
+            ng-click="setTaskDifficulty(d.number)"
+            ng-class="{ 'list-group-item-info': d.number == taskDifficulty }"
+            class="list-group-item">{{ d.text }}</a>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" ng-click="saveTask()" ng-disabled="!isValidTask()" data-dismiss="modal">
+          <span class="glyphicon glyphicon-ok"></span> Save
+        </button>
+        <button class="btn btn-danger" data-dismiss="modal">
+          <span class="glyphicon glyphicon-remove"></span> Cancel
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -3,6 +3,7 @@ import { Scrums } from '../../api/collections.js';
 import '../personas/personas.directive.js';
 import '../backlog/backlog.directive.js';
 import '../planning/planning.directive.js';
+import '../taskboard/taskboard.directive.js';
 
 
 angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive', '$location', '$stateParams', function($scope, $reactive, $location, $stateParams) {

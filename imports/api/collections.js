@@ -442,6 +442,7 @@ if (Meteor.isServer) {
         var story = scrum.backlog[i];
         if (scrum.sprint.backlog.indexOf(story.id) != -1) {
           story.estimate = story.estimates[Meteor.userId()];
+          story.tasks = { todo: [], inProgress: [], review: [], done:[] };
           sprint_backlog.push(story);
           scrum.backlog.splice(i, 1)
           i--;
@@ -477,6 +478,94 @@ if (Meteor.isServer) {
       Scrums.update(scrumUpdateSelector(scrumId), {
           $set: {
             'sprint': null
+          }
+        }
+      );
+    },
+
+    'scrums.userstories.createTask' (scrumId, storyId, text, difficulty) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      if (scrum.sprint == null || scrum.sprint.status != 'active') {
+        throw new Meteor.Error(400, 'There is no active sprint');
+      }
+
+      var story = null;
+      for (var i = 0; i < scrum.sprint.backlog.length; i++) {
+        s = scrum.sprint.backlog[i];
+        if (s.id === storyId) {
+          story = s;
+        }
+      }
+      if (story == null) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id');
+      }
+
+      story.tasks.todo.push({
+        'text': text,
+        'difficulty': difficulty,
+        'workers': []
+      });
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'sprint.backlog': scrum.sprint.backlog
+          }
+        }
+      );
+    },
+
+    'taskboard.move' (scrumId, storyId, index, from, to) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      if (scrum.sprint == null || scrum.sprint.status != 'active') {
+        throw new Meteor.Error(400, 'There is no active sprint');
+      }
+
+      var story = null;
+      for (var i = 0; i < scrum.sprint.backlog.length; i++) {
+        s = scrum.sprint.backlog[i];
+        if (s.id === storyId) {
+          story = s;
+        }
+      }
+      if (story == null) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id');
+      }
+      if (!story.tasks[from]) {
+        throw new Meteor.Error(400, 'No tasks exist for given from status');
+      }
+      var fromList = story.tasks[from];
+      if (index < 0 || index >= fromList.length) {
+        throw new Meteor.Error(400, 'Index out of bounds');
+      }
+      if (!story.tasks[to]) {
+        throw new Meteor.Error(400, 'No tasks exist for given to status');
+      }
+      var toList = story.tasks[to];
+      var task = fromList.splice(index, 1);
+      var email = Meteor.user().emails[0].address;
+      if (task.workers == null) {
+        task.workers = [];
+      }
+      if (task.workers.indexOf(email) == -1) {
+        task.workers.push(email);
+      }
+      toList.push(task);
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'sprint.backlog': scrum.sprint.backlog
           }
         }
       );

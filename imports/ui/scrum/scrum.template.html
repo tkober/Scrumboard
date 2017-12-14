@@ -83,9 +83,7 @@
   <planning ng-if="view == SPRINT_PLANNING" scrum="scrum"></planning>
 
   <!-- Sprint Board -->
-  <div class="" ng-if="view == SPRINT_BOARD">
-    <h3>Sprint Board</h3>
-  </div>
+  <taskboard ng-if="view == SPRINT_BOARD" scrum="scrum"></taskboard>
 
   <!-- Retrospective -->
   <div class="" ng-if="view == RETROSPECTIVE">

@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-xs-3 centered">
+    <span>TODO</span>
+  </div>
+  <div class="col-xs-3 centered">
+    <span>In Progress</span>
+  </div>
+  <div class="col-xs-3 centered">
+    <span>Review</span>
+  </div>
+  <div class="col-xs-3 centered">
+    <span>Done</span>
+  </div>
+</div>
+<taskrow ng-repeat="story in scrum.sprint.backlog" story="story" scrum="scrum"></taskrow>
