@@ -1,7 +1,7 @@
 import '../task/task.directive.js';
 
 
-angular.module('scrumboard').controller('TaskrowController', ['$scope', '$location', '$reactive', function($scope, $location) {
+angular.module('scrumboard').controller('TaskrowController', ['$scope', '$location', '$timeout', function($scope, $location, $timeout) {
 
   $scope.taskDescription = null;
   $scope.taskDifficulty = 0;
@@ -32,11 +32,12 @@ angular.module('scrumboard').controller('TaskrowController', ['$scope', '$locati
   };
 
   $scope.saveTask = function() {
-    Meteor.call('scrums.userstories.createTask', $scope.scrum._id,
-    $scope.story.id, $scope.taskDescription, $scope.taskDifficulty, (error) => {
-      $scope.error = error;
-      $scope.$apply();
-    });
+    $timeout(function() {
+      Meteor.call('scrums.userstories.createTask', $scope.scrum._id,
+      $scope.story.id, $scope.taskDescription, $scope.taskDifficulty, (error) => {
+        $scope.error = error;
+      });
+    }, 500);
   };
 
 }]);

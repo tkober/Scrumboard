@@ -46,7 +46,7 @@ angular.module('scrumboard').controller('PlanningController', ['$scope', '$locat
         }
     });
 
-    Meteor.call('scrums.sprint.start_planning', $scope.scrum._id, angular.toJson(planners), (error) => {
+    Meteor.call('scrums.sprint.start_planning', $scope.scrum._id, $scope.from, $scope.to, angular.toJson(planners), (error) => {
       $scope.error = error;
       $scope.$apply();
     });

@@ -8,4 +8,12 @@ angular.module('scrumboard').controller('TaskController', ['$scope', '$location'
     });
   };
 
+  $scope.removeTask = function() {
+    Meteor.call('scrums.userstories.removeTask', $scope.scrum._id, $scope.story.id,
+    $scope.index, $scope.taskStatus, (error) => {
+      $scope.error = error;
+      $scope.$apply();
+    });
+  };
+
 }]);
