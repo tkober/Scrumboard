@@ -1,7 +1,8 @@
+import './configure_scrum.less';
+
+
 angular.module('scrumboard').controller('ConfigureScrumController', ['$scope', '$location', '$stateParams', '$reactive', function($scope, $location, $stateParams, $reactive) {
   $reactive(this).attach($scope);
-
-  document.body.style.background = 'white';
 
   $scope.scrumToEdit = $stateParams.scrumId;
 

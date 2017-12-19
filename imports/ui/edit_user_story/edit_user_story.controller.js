@@ -1,3 +1,6 @@
+import './edit_user_story.less';
+
+
 angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$location', '$stateParams', '$reactive', function($scope, $location, $stateParams, $reactive) {
   $reactive(this).attach($scope);
 

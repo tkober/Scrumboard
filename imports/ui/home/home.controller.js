@@ -6,8 +6,6 @@ import '../scrum_entry/scrum_entry.directive.js';
 angular.module('scrumboard').controller('HomeController', ['$scope', '$reactive', '$location', function($scope, $reactive, $location) {
   $reactive(this).attach($scope);
 
-  document.body.style.background = 'white';
-
   Meteor.subscribe("scrums");
 
   $scope.helpers({

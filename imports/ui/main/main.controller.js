@@ -3,6 +3,4 @@ angular.module('scrumboard').controller('MainController', ['$scope', function($s
     $scope.isLoggedIn = Meteor.userId() != null;
   });
 
-  document.body.style.background = 'white';
-
 }]);

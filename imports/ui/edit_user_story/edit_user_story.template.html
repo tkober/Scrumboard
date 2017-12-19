@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -43,7 +43,7 @@
     <!-- Epic -->
     <div class="row">
       <div class="col-xs-12">
-        <div class="input-group">
+        <div class="input-group epic-input-group">
           <span class="input-group-addon" id="basic-addon1">Epic</span>
           <input type="text" class="form-control" placeholder="Enter the epic" ng-model="epic">
         </div>
@@ -52,16 +52,16 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <div class="input-group">
+        <div class="input-group persona-group">
 
           <div class="dropdown">
             <span>As</span>
 
-            <span class="" ng-repeat="persona in personas">
+            <span class="persona-box" ng-repeat="persona in personas">
               <a href="" ng-click="removePersona(persona)"><span class="glyphicon glyphicon-remove"></span></a>{{ persona.title }}
             </span>
 
-            <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+            <button class="btn btn-info btn-xs dropdown-toggle add-persona-button" type="button" data-toggle="dropdown">
               <span class="glyphicon glyphicon-plus"></span></button>
               <ul class="dropdown-menu">
                 <li ng-repeat="persona in availablePersonas"><a href="" ng-click="addPersona(persona)">{{ persona.name }}</a></li>
@@ -75,14 +75,14 @@
       <div class="row">
         <div class="col-xs-12">
           <span>{{ personalPronoun() }} want</span>
-          <textarea class="form-control" rows="2" id="comment" ng-model="goal"></textarea>
+          <textarea class="form-control drk-textarea" rows="2" id="comment" ng-model="goal"></textarea>
         </div>
       </div>
 
       <div class="row">
         <div class="col-xs-12">
           <span>so that</span>
-          <textarea class="form-control" rows="2" id="comment" ng-model="reason"></textarea>
+          <textarea class="form-control drk-textarea" rows="2" id="comment" ng-model="reason"></textarea>
         </div>
       </div>
 
@@ -122,7 +122,7 @@
 
       <!-- Buttons -->
       <div class="row">
-        <div class="col-xs-12 right">
+        <div class="col-xs-12 right action-buttons">
 
           <button class="btn btn-success" ng-click="save()" ng-disabled="!isValid()">
             <span class="glyphicon glyphicon-ok"></span> Save
