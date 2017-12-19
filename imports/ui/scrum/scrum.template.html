@@ -86,15 +86,13 @@
   <taskboard ng-if="view == SPRINT_BOARD" scrum="scrum"></taskboard>
 
   <!-- Retrospective -->
-  <div class="" ng-if="view == RETROSPECTIVE">
-    <h3>Retrospective</h3>
-  </div>
+  <retrospective ng-if="view == RETROSPECTIVE" scrum="scrum"></retrospective>
 
   <!-- Burndown -->
-  <burndown class="" ng-if="view == BURNDOWN" scrum="scrum"></burndown>
+  <burndown ng-if="view == BURNDOWN" scrum="scrum"></burndown>
 
   <!-- Backlog -->
-  <backlog class="" ng-if="view == BACKLOG" scrum="scrum"></backlog>
+  <backlog ng-if="view == BACKLOG" scrum="scrum"></backlog>
 
   <!-- Personas -->
   <personas ng-if="view == PERSONAS" scrum="scrum"></personas>

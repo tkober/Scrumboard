@@ -5,6 +5,7 @@ import '../backlog/backlog.directive.js';
 import '../planning/planning.directive.js';
 import '../taskboard/taskboard.directive.js';
 import '../burndown/burndown.directive.js';
+import '../retrospective/retrospective.directive.js';
 
 
 angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive', '$location', '$stateParams', function($scope, $reactive, $location, $stateParams) {

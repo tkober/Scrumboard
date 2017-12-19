@@ -366,7 +366,14 @@ if (Meteor.isServer) {
               'end': end,
               'planningParticipants': JSON.parse(planningParticipants),
               'backlog': [],
-              'burndown': []
+              'burndown': [],
+              'retrospective': {
+                'good': [],
+                'poor': [],
+                'try': [],
+                'keep': [],
+                'drop': []
+              }
             }
           }
         }
@@ -659,6 +666,33 @@ if (Meteor.isServer) {
           $set: {
             'sprint.backlog': scrum.sprint.backlog,
             'sprint.burndown': scrum.sprint.burndown
+          }
+        }
+      );
+    },
+
+    'scrums.retrospective.addItem' (scrumId, item, category) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      if (scrum.sprint == null) {
+        throw new Meteor.Error(400, 'There is no pending sprint');
+      }
+
+      var validCategories = ['good', 'poor', 'try', 'keep', 'drop'];
+      if (validCategories.indexOf(category) == -1) {
+        throw new Meteor.Error(400, 'Invalid category');
+      }
+
+      scrum.sprint.retrospective[category].push(item);
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'sprint.retrospective': scrum.sprint.retrospective,
           }
         }
       );

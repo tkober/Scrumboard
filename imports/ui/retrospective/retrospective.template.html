@@ -1,0 +1,189 @@
+<div class="row">
+
+  <div class="col-xs-1">
+  </div>
+
+  <div class="col-xs-10">
+
+    <!-- Step 1 -->
+    <div class="row">
+
+      <!-- Good -->
+      <div class="col-xs-6">
+
+        <div class="row">
+          <div class="col-xs-12">
+            <h4><span class="glyphicon glyphicon-thumbs-up"></span> Good</h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="item in scrum.sprint.retrospective.good">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Add item" ng-model="newGoodItem">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button" ng-disabled="!isValidItem(newGoodItem)" ng-click="addGoodItem()">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Poor -->
+      <div class="col-xs-6">
+
+        <div class="row right">
+          <div class="col-xs-12">
+            <h4>Poor <span class="glyphicon glyphicon-thumbs-down"></span></h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="item in scrum.sprint.retrospective.poor">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Add item" ng-model="newPoorItem">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button" ng-disabled="!isValidItem(newPoorItem)" ng-click="addPoorItem()">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row" ng-if="showSecondStep()">
+      <div class="col-xs-12">
+        <hr>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="row" ng-if="showSecondStep()">
+
+      <!-- Try -->
+      <div class="col-xs-4">
+
+        <div class="row">
+          <div class="col-xs-12">
+            <h4><span class="glyphicon glyphicon-certificate"></span> Try</h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="item in scrum.sprint.retrospective.try">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Add item" ng-model="newTryItem">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button" ng-disabled="!isValidItem(newTryItem)" ng-click="addTryItem()">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Keep -->
+      <div class="col-xs-4 centered">
+
+        <div class="row">
+          <div class="col-xs-12">
+            <h4><span class="glyphicon glyphicon-heart"></span> Keep</h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="item in scrum.sprint.retrospective.keep">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Add item" ng-model="newKeepItem">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button" ng-disabled="!isValidItem(newKeepItem)" ng-click="addKeepItem()">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Drop -->
+      <div class="col-xs-4">
+
+        <div class="row right">
+          <div class="col-xs-12">
+            <h4>Drop <span class="glyphicon glyphicon-trash"></span></h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="item in scrum.sprint.retrospective.drop">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Add item" ng-model="newDropItem">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button" ng-disabled="!isValidItem(newDropItem)" ng-click="addDropItem()">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-xs-1">
+  </div>
+
+</div>
