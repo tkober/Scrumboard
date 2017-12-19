@@ -3,9 +3,6 @@ import { Device } from './helpers/device.js';
 import '../ui/home/home.controller.js';
 import '../ui/home/home.template.html';
 
-import '../ui/board/board.controller.js';
-import '../ui/board/board.template.html';
-
 import '../ui/scrum/scrum.controller.js';
 import '../ui/scrum/scrum.template.html';
 

@@ -1,6 +1,3 @@
-export const Boards = new Mongo.Collection('boards');
-export const Lines = new Mongo.Collection('lines');
-
 export const Scrums = new Mongo.Collection('scrums');
 
 if (Meteor.isServer) {
@@ -64,24 +61,6 @@ if (Meteor.isServer) {
     }
     return result;
   };
-
-  Meteor.publish('boards', function() {
-    return Boards.find({
-      '$or': [
-        { owner: this.userId },
-        { participants: this.userId }
-      ]
-    }, {
-      sort: {
-        date: 1
-      }
-    });
-  });
-
-  Meteor.publish('lines', function() {
-    return Lines.find({}, {});
-  });
-
 
   Meteor.publish('scrums', function() {
     return Scrums.find({
