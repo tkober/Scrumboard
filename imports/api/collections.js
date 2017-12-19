@@ -698,6 +698,40 @@ if (Meteor.isServer) {
           }
         }
       );
+    },
+
+    'scrums.sprint.retire' (scrumId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      if (scrum.sprint == null || scrum.sprint.status != 'ended') {
+        throw new Meteor.Error(400, 'There is no ended sprint');
+      }
+
+      // Inverse to keep priorities
+      for (var i = scrum.sprint.backlog.length-1; i >= 0; i--) {
+        var story = scrum.sprint.backlog[i];
+        if ((story.tasks.todo.length + story.tasks.inProgress.length + story.tasks.review.length) > 0) {
+          if (scrum.sprint.storiesToDelete.indexOf(story.id) == -1) {
+            delete story.tasks;
+            delete story.estimate;
+            story.estimates = {};
+            scrum.backlog.unshift(story);
+          }
+        }
+      }
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'backlog': scrum.backlog,
+            'sprint': null
+          }
+        }
+      );
     }
 
   });

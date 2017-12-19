@@ -20,11 +20,11 @@
 
         <!-- Sprint Board -->
         <li class="menu-item" ng-class="{ active: view == SPRINT_BOARD }" ng-show="hasActiveSprint()">
-          <a href ng-click="view = SPRINT_BOARD"><span class="glyphicon glyphicon-th"></span> Sprint Board</a>
+          <a href ng-click="view = SPRINT_BOARD"><span class="glyphicon glyphicon-blackboard"></span> Sprint Board</a>
         </li>
 
         <!-- Retrospective -->
-        <li class="menu-item" ng-class="{ active: view == RETROSPECTIVE }" ng-show="hasActiveSprint()">
+        <li class="menu-item" ng-class="{ active: view == RETROSPECTIVE }" ng-show="hasActiveSprint() || hasEndedSprint()">
           <a href ng-click="view = RETROSPECTIVE"><span class="glyphicon glyphicon-comment"></span> Retrospective</a>
         </li>
 
@@ -34,7 +34,7 @@
         </li>
 
         <!-- Plan Sprint -->
-        <li class="menu-item" ng-class="{ active: view == SPRINT_PLANNING }" ng-show="!hasActiveSprint()">
+        <li class="menu-item" ng-class="{ active: view == SPRINT_PLANNING }" ng-show="hasNoSprint()">
           <a href ng-click="view = SPRINT_PLANNING"><span class="glyphicon glyphicon-repeat"></span> Plan Sprint</a>
         </li>
 
@@ -43,22 +43,27 @@
           <a href ng-click="showEndSprint()"><span class="glyphicon glyphicon-stop"></span> End Sprint</a>
         </li>
 
+        <!-- Retire Sprint -->
+        <li class="menu-item" ng-show="hasEndedSprint()">
+          <a href ng-click="showRetireSprint()"><span class="glyphicon glyphicon-inbox"></span> Retire Sprint</a>
+        </li>
+
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
 
         <!-- Backlog -->
-        <li class="menu-item" ng-class="{ active: view == BACKLOG }" ng-show="!hasNotStartedSprint()">
+        <li class="menu-item" ng-class="{ active: view == BACKLOG }" ng-show="hasNoSprint() || hasActiveSprint()">
           <a href ng-click="view = BACKLOG"><span class="glyphicon glyphicon-th-list"></span> Backlog</a>
         </li>
 
         <!-- Personas -->
-        <li class="menu-item" ng-class="{ active: view == PERSONAS }">
+        <li class="menu-item" ng-class="{ active: view == PERSONAS }" ng-show="!hasEndedSprint()">
           <a href ng-click="view = PERSONAS"><span class="glyphicon glyphicon-user"></span> Personas</a>
         </li>
 
         <!-- History -->
-        <li class="menu-item" ng-class="{ active: view == HISTORY }">
+        <li class="menu-item" ng-class="{ active: view == HISTORY }" ng-show="!hasEndedSprint()">
           <a href ng-click="view = HISTORY"><span class="glyphicon glyphicon-folder-open"></span> History</a>
         </li>
 
@@ -138,6 +143,32 @@
         </button>
         <button class="btn btn-danger" data-dismiss="modal" ng-click="endSprint()">
           <span class="glyphicon glyphicon-ok"></span> End
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="retire_sprint_modal" class="modal fade noselect" role="dialog">
+  <div class="modal-dialog result-modal">
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Retire Sprint</h4>
+
+      </div>
+      <div class="modal-body">
+        <p>Do you want to retire the current sprint?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal">
+          <span class="glyphicon glyphicon-remove"></span> Cancel
+        </button>
+        <button class="btn btn-danger" data-dismiss="modal" ng-click="retireSprint()">
+          <span class="glyphicon glyphicon-ok"></span> Retire
         </button>
       </div>
     </div>

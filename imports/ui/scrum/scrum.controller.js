@@ -46,11 +46,32 @@ angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive
     return $scope.scrum && $scope.scrum.sprint && $scope.scrum.sprint.status == 'planning';
   };
 
+  $scope.hasEndedSprint = function() {
+    return $scope.scrum && $scope.scrum.sprint && $scope.scrum.sprint.status == 'ended';
+  };
+
   $scope.hasNoSprint = function() {
     return $scope.scrum && !$scope.scrum.sprint;
   };
 
-  $scope.view = $scope.hasActiveSprint() ? $scope.SPRINT_BOARD : $scope.SPRINT_PLANNING;
+  var setInitialView = function() {
+    $scope.view = $scope.SPRINT_BOARD;
+    if ($scope.hasNoSprint()) {
+      $scope.view = $scope.SPRINT_PLANNING;
+    }
+    if ($scope.hasEndedSprint()) {
+      $scope.view = $scope.RETROSPECTIVE;
+    }
+  };
+
+  if (!$scope.scrum) {
+    $timeout(function() {
+      setInitialView();
+    }, 500);
+  } else {
+    setInitialView();
+  }
+
 
   var isStoryDone = function(story) {
     return (story.tasks.todo.length +
@@ -73,6 +94,10 @@ angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive
     $('#end_sprint_modal').modal('show');
   };
 
+  $scope.showRetireSprint = function() {
+    $('#retire_sprint_modal').modal('show');
+  };
+
   $scope.endSprint = function() {
     $timeout(function() {
       var storiesToDelete = [];
@@ -83,6 +108,14 @@ angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive
         }
       }
       Meteor.call('scrums.sprint.end', $scope.scrum._id, angular.toJson(storiesToDelete), (error) => {
+        $scope.error = error;
+      });
+    }, 500);
+  };
+
+  $scope.retireSprint = function() {
+    $timeout(function() {
+      Meteor.call('scrums.sprint.retire', $scope.scrum._id, (error) => {
         $scope.error = error;
       });
     }, 500);
