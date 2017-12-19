@@ -235,6 +235,35 @@ if (Meteor.isServer) {
       );
     },
 
+    'scrums.userstories.delete' (scrumId, storyId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      var story = null;
+      for (var i = 0; i < scrum.backlog.length; i++) {
+        s = scrum.backlog[i];
+        if (s.id === storyId) {
+          story = s;
+          break;
+        }
+      }
+      if (story == null) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id');
+      }
+      scrum.backlog.splice(i, 1);
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'backlog': scrum.backlog
+          }
+        }
+      );
+    },
+
     'scrums.userstories.estimate' (scrumId, storyId, estimate) {
       if (!Meteor.userId()) {
         throw new Meteor.Error('not-authorized');

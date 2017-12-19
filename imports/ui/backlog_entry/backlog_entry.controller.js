@@ -135,4 +135,11 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
     return $scope.planning && $scope.isInSprintBacklog();
   };
 
+  $scope.deleteStory = function() {
+    Meteor.call('scrums.userstories.delete', $scope.scrum._id, $scope.userstory.id, (error) => {
+      $scope.error = error;
+      $scope.$apply();
+    });
+  };
+
 }]);
