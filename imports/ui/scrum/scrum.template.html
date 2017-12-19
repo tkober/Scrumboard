@@ -40,7 +40,7 @@
 
         <!-- Stop Sprint -->
         <li class="menu-item" ng-show="hasActiveSprint()">
-          <a href ng-click=""><span class="glyphicon glyphicon-stop"></span> End Sprint</a>
+          <a href ng-click="showEndSprint()"><span class="glyphicon glyphicon-stop"></span> End Sprint</a>
         </li>
 
       </ul>
@@ -102,4 +102,45 @@
     <h3>History</h3>
   </div>
 
+</div>
+
+<div id="end_sprint_modal" class="modal fade noselect" role="dialog">
+  <div class="modal-dialog result-modal">
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">End Sprint</h4>
+
+      </div>
+      <div class="modal-body">
+        <div ng-if="undoneStories.length > 0">
+          <label>Open Stories</label>
+          <p>The following stories are not completely done. Which stories shall be put back to the product backlog?</p>
+
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="undone in undoneStories">
+              <input type="checkbox" ng-model="undone.putBack">
+              <span>As <span ng-repeat="persona in undone.story.personas"> {{ persona.title }}</span> {{ undone.story.personas.length > 1 ? 'we' : 'I' }} want {{ undone.story.goal }}</span>
+            </li>
+          </ul>
+
+        </div>
+        <div ng-if="undoneStories.length == 0">
+          <label>Well done!</label>
+          <p>All stories are done! Do you want to end the current sprint?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal">
+          <span class="glyphicon glyphicon-remove"></span> Cancel
+        </button>
+        <button class="btn btn-danger" data-dismiss="modal" ng-click="endSprint()">
+          <span class="glyphicon glyphicon-ok"></span> End
+        </button>
+      </div>
+    </div>
+
+  </div>
 </div>

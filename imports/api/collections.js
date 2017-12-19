@@ -675,6 +675,29 @@ if (Meteor.isServer) {
           }
         }
       );
+    },
+
+    'scrums.sprint.end' (scrumId, storiesToDelete) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      if (scrum.sprint == null || scrum.sprint.status != 'active') {
+        throw new Meteor.Error(400, 'There is no active sprint');
+      }
+
+      scrum.sprint.storiesToDelete = JSON.parse(storiesToDelete);
+      scrum.sprint.status = 'ended';
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'sprint': scrum.sprint,
+          }
+        }
+      );
     }
 
   });

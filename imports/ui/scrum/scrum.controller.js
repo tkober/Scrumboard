@@ -8,7 +8,7 @@ import '../burndown/burndown.directive.js';
 import '../retrospective/retrospective.directive.js';
 
 
-angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive', '$location', '$stateParams', function($scope, $reactive, $location, $stateParams) {
+angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive', '$location', '$stateParams', '$timeout', function($scope, $reactive, $location, $stateParams, $timeout) {
   $reactive(this).attach($scope);
   Meteor.subscribe("scrums");
 
@@ -51,5 +51,41 @@ angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive
   };
 
   $scope.view = $scope.hasActiveSprint() ? $scope.SPRINT_BOARD : $scope.SPRINT_PLANNING;
+
+  var isStoryDone = function(story) {
+    return (story.tasks.todo.length +
+      story.tasks.inProgress.length +
+      story.tasks.review.length) == 0;
+  };
+
+  $scope.showEndSprint = function() {
+    $scope.undoneStories = [];
+
+    for (var i = 0; i < $scope.scrum.sprint.backlog.length; i++) {
+      var story = $scope.scrum.sprint.backlog[i];
+      if (!isStoryDone(story)) {
+        $scope.undoneStories.push({
+          'story': story,
+          'putBack': true
+        });
+      }
+    }
+    $('#end_sprint_modal').modal('show');
+  };
+
+  $scope.endSprint = function() {
+    $timeout(function() {
+      var storiesToDelete = [];
+      for (var i = 0; i < $scope.undoneStories.length; i++) {
+        var item = $scope.undoneStories[i];
+        if (!item.putBack) {
+          storiesToDelete.push(item.story.id);
+        }
+      }
+      Meteor.call('scrums.sprint.end', $scope.scrum._id, angular.toJson(storiesToDelete), (error) => {
+        $scope.error = error;
+      });
+    }, 500);
+  };
 
 }]);
