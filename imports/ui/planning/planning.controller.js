@@ -1,7 +1,7 @@
 import '../backlog_entry/backlog_entry.directive.js';
 
 
-angular.module('scrumboard').controller('PlanningController', ['$scope', '$location', '$reactive', function($scope, $location, $reactive) {
+angular.module('scrumboard').controller('PlanningController', ['$scope', '$location', '$reactive', '$window', function($scope, $location, $reactive, $window) {
   $reactive(this).attach($scope);
 
   $scope.from = new Date();
@@ -76,6 +76,9 @@ angular.module('scrumboard').controller('PlanningController', ['$scope', '$locat
     if ($scope.isValidSprint()) {
       Meteor.call('scrums.sprint.start', $scope.scrum._id, (error) => {
         $scope.error = error;
+        if (!error) {
+          $window.location.reload();
+        }
         $scope.$apply();
       });
     }

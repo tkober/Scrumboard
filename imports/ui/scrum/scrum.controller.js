@@ -8,7 +8,8 @@ import '../burndown/burndown.directive.js';
 import '../retrospective/retrospective.directive.js';
 
 
-angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive', '$location', '$stateParams', '$timeout', function($scope, $reactive, $location, $stateParams, $timeout) {
+angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive', '$location', '$stateParams', '$timeout', '$window',
+  function($scope, $reactive, $location, $stateParams, $timeout, $window) {
   $reactive(this).attach($scope);
   Meteor.subscribe("scrums");
 
@@ -56,7 +57,7 @@ angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive
 
   var setInitialView = function() {
     $scope.view = $scope.SPRINT_BOARD;
-    if ($scope.hasNoSprint()) {
+    if ($scope.hasNoSprint() || $scope.hasNotStartedSprint()) {
       $scope.view = $scope.SPRINT_PLANNING;
     }
     if ($scope.hasEndedSprint()) {
@@ -109,6 +110,9 @@ angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive
       }
       Meteor.call('scrums.sprint.end', $scope.scrum._id, angular.toJson(storiesToDelete), (error) => {
         $scope.error = error;
+        if (!error) {
+          $window.location.reload();
+        }
       });
     }, 500);
   };
@@ -117,6 +121,9 @@ angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive
     $timeout(function() {
       Meteor.call('scrums.sprint.retire', $scope.scrum._id, (error) => {
         $scope.error = error;
+        if (!error) {
+          $window.location.reload();
+        }
       });
     }, 500);
   };
