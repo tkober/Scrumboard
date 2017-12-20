@@ -1,4 +1,5 @@
 import '../task/task.directive.js';
+import './taskrow.less';
 
 
 angular.module('scrumboard').controller('TaskrowController', ['$scope', '$location', '$timeout', function($scope, $location, $timeout) {
@@ -7,10 +8,12 @@ angular.module('scrumboard').controller('TaskrowController', ['$scope', '$locati
   $scope.taskDifficulty = 0;
 
   $scope.personalPronoun = function() {
-    return $scope.story.personas.length > 1 ? 'We' : 'I';
+    return $scope.story.personas.length > 1 ? 'we' : 'I';
   };
 
   $scope.createTask = function() {
+    $scope.taskDescription = null;
+    $scope.taskDifficulty = 0;
     $('#createTaskModal_' + $scope.story.id).modal('show');
   };
 

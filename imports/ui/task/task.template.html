@@ -1,13 +1,13 @@
-<div class="list-group">
-  <li class="list-group-item">
+<div class="list-group task-container">
+  <div class="list-item not-interactable">
     <table style="width: 100%">
       <tr>
         <td>
-          <label>{{ task.difficulty }}</label>
+          <span class="difficulty">{{ task.difficulty }}</span>
         </td>
         <td class="right">
           <div class="dropdown">
-            <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <button class="btn btn-default btn-xs dropdown-toggle task-actions" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               <span class="glyphicon glyphicon-option-vertical"></span>
             </button>
 
@@ -35,14 +35,16 @@
       </tr>
       <tr>
         <td colspan="2">
-          <span>{{ task.text }}</span>
+          <span class="task-text">{{ task.text }}</span>
         </td>
       </tr>
       <tr>
-        <td colspan="2">
-          <p ng-repeat="worker in task.workers"><label>{{ worker }}</label></p>
+        <td colspan="2" class="workers">
+          <p ng-repeat="worker in task.workers">
+            <a ng-href="mailto:{{worker}}" class="worker-name">{{ worker }}</a>
+          </p>
         </td>
       </tr>
     </table>
-  </li>
+  </div>
 </div>

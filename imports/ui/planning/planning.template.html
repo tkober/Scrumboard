@@ -66,7 +66,7 @@
       <div ng-if="isPartOfPlanning()">
         <backlog-entry ng-repeat="story in scrum.backlog" userstory="story" scrum="scrum" planning="true"></backlog-entry>
 
-        <nav class="navbar navbar-default navbar-fixed-bottom">
+        <nav class="navbar navbar-inverse navbar-fixed-bottom">
             <div class="container">
                 <div class="navbar-header">
                     <span class="navbar-brand">{{ sprintBacklogEstimate() }} spts</span>
@@ -74,7 +74,7 @@
                 <ul class="nav navbar-nav navbar-right">
                   <li>
                     <p class="navbar-btn">
-                      <a href ng-click="startSprint()" class="btn btn-success" ng-disabled="!isValidSprint()">
+                      <a href ng-click="startSprint()" class="btn btn-success start-sprint-button" ng-disabled="!isValidSprint()">
                         <span class="glyphicon glyphicon-play"></span> Start Sprint
                       </a>
                     </p>

@@ -1,4 +1,5 @@
 import '../backlog_entry/backlog_entry.directive.js';
+import './planning.less';
 
 
 angular.module('scrumboard').controller('PlanningController', ['$scope', '$location', '$reactive', '$window', function($scope, $location, $reactive, $window) {

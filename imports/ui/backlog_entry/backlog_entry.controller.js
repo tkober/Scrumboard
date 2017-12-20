@@ -1,3 +1,6 @@
+import './backlog_entry.less';
+
+
 angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$location', function($scope, $location) {
 
   $scope.error = null;

@@ -1,3 +1,6 @@
+import './task.less';
+
+
 angular.module('scrumboard').controller('TaskController', ['$scope', '$location', '$reactive', function($scope, $location) {
 
   $scope.moveTask = function(to) {
