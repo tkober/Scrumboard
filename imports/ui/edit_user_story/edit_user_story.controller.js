@@ -26,7 +26,9 @@ angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$
     angular.toJson($scope.acceptanceCriteria),
     $scope.goal,
     $scope.reason,
-    $stateParams.scrumId, (error, result) => {
+    $stateParams.scrumId,
+    $scope.intranet,
+    $scope.redmine, (error, result) => {
       if (error) {
         $scope.error = error;
       } else {

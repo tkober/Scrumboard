@@ -6,43 +6,63 @@
           <h5>{{ userstory.epic }}</h5>
         </td>
         <td class="right">
-        </td>
-        <td class="right">
+          <!-- Split button -->
+          <div class="btn-group">
+            <button type="button" class="btn story-actions btn-sm" ng-if="canAddToBacklog()" ng-click="addToSprintBacklog()"><span class="glyphicon glyphicon-ok-circle"></span></button>
+            <button type="button" class="btn story-actions btn-sm" ng-if="canRemoveFromBacklog()" ng-click="removeFromSprintBacklog()"><span class="glyphicon glyphicon-ban-circle"></span></button>
 
-          <div class="story-actions-box">
-            <div class="priority-buttons-container">
-              <a href ng-if="canAddToBacklog()" ng-click="addToSprintBacklog()"><span class="glyphicon glyphicon-ok-circle"></span></a>
-              <a href ng-if="canRemoveFromBacklog()" ng-click="removeFromSprintBacklog()"><span class="glyphicon glyphicon-ban-circle"></span></a>
+            <button type="button" class="btn story-actions btn-sm" ng-click="increase_priority()"><span class="glyphicon glyphicon-chevron-up"></span></button>
+            <button type="button" class="btn story-actions btn-sm" ng-click="decrease_priority()"><span class="glyphicon glyphicon-chevron-down"></span></button>
 
-              <a href ng-click="increase_priority()"><span class="glyphicon glyphicon-chevron-up"></span></a>
-              <a href ng-click="decrease_priority()"><span class="glyphicon glyphicon-chevron-down"></span></a>
-            </div>
-
-            <div class="dropdown story-actions-container" ng-class="{ disabled: isInSprintBacklog() }">
-              <button class="btn btn-default btn-sm dropdown-toggle story-actions" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <span class="glyphicon glyphicon-option-vertical"></span>
-              </button>
-
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li ng-if="planning">
-                  <a href ng-click="resetEstimate()"><span class="glyphicon glyphicon-repeat"></span> Reset estimates</a>
-                </li>
-                <li>
-                  <a href=""><span class="glyphicon glyphicon-wrench"></span> Edit</a>
-                </li>
-                <li role="separator" class="divider"></li>
-                <li>
-                  <a href ng-click="deleteStory()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
-                </li>
-              </ul>
-            </div>
+            <button type="button" class="btn story-actions btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-option-vertical"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li ng-if="planning">
+                <a href ng-click="resetEstimate()"><span class="glyphicon glyphicon-repeat"></span> Reset estimates</a>
+              </li>
+              <li>
+                <a href=""><span class="glyphicon glyphicon-wrench"></span> Edit</a>
+              </li>
+              <li role="separator" class="divider"></li>
+              <li>
+                <a href ng-click="deleteStory()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+              </li>
+            </ul>
           </div>
-
         </td>
+
+        <!-- <td class="right">
+          <div class="dropdown" ng-class="{ disabled: isInSprintBacklog() }">
+            <a href ng-if="canAddToBacklog()" ng-click="addToSprintBacklog()"><span class="glyphicon glyphicon-ok-circle"></span></a>
+            <a href ng-if="canRemoveFromBacklog()" ng-click="removeFromSprintBacklog()"><span class="glyphicon glyphicon-ban-circle"></span></a>
+
+            <a href ng-click="increase_priority()"><span class="glyphicon glyphicon-chevron-up"></span></a>
+            <a href ng-click="decrease_priority()"><span class="glyphicon glyphicon-chevron-down"></span></a>
+
+            <button class="btn btn-default btn-sm dropdown-toggle story-actions" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span class="glyphicon glyphicon-option-vertical"></span>
+            </button>
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li ng-if="planning">
+                <a href ng-click="resetEstimate()"><span class="glyphicon glyphicon-repeat"></span> Reset estimates</a>
+              </li>
+              <li>
+                <a href=""><span class="glyphicon glyphicon-wrench"></span> Edit</a>
+              </li>
+              <li role="separator" class="divider"></li>
+              <li>
+                <a href ng-click="deleteStory()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+              </li>
+            </ul>
+          </div>
+        </td> -->
       </tr>
 
       <tr id="persona-row">
-        <td colspan="3">
+        <td colspan="2">
           <span>As
             <span ng-repeat="persona in userstory.personas">
               <a href=""> {{ persona.title }}</a>,
@@ -52,19 +72,19 @@
       </tr>
 
       <tr>
-        <td colspan="3">
+        <td colspan="2">
           <span>{{ personalPronoun() }} want {{ userstory.goal }}</span>
         </td>
       </tr>
 
       <tr>
-        <td colspan="3">
+        <td colspan="2">
           <span>so that {{ userstory.reason }}.</span>
         </td>
       </tr>
 
       <tr>
-        <td colspan="3">
+        <td colspan="2">
           <h5>Acceptance Criteria</h5>
           <ul>
             <li ng-repeat="ac in userstory.acceptanceCriteria">{{ ac }}</li>
@@ -73,7 +93,7 @@
       </tr>
 
       <tr>
-        <td colspan="3">
+        <td colspan="2">
           <h5>Estimate</h5>
 
           <div class="btn-group estimate-box" role="group" aria-label="..." ng-if="showEstimatePanel()">

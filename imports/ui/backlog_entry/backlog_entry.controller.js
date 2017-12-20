@@ -110,7 +110,7 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
   };
 
   $scope.isInSprintBacklog = function() {
-    return $scope.scrum.sprint.backlog.indexOf($scope.userstory.id) != -1;
+    return $scope.scrum.sprint && $scope.scrum.sprint.backlog.indexOf($scope.userstory.id) != -1;
   };
 
   $scope.canAddToBacklog = function() {

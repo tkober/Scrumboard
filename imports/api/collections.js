@@ -186,7 +186,7 @@ if (Meteor.isServer) {
       return scrum.personas;
     },
 
-    'scrums.userstories.create' (epic, personas, acceptanceCriteria, goal, reason, scrumId) {
+    'scrums.userstories.create' (epic, personas, acceptanceCriteria, goal, reason, scrumId, intranet, redmine) {
       if (!Meteor.userId()) {
         throw new Meteor.Error('not-authorized');
       }
@@ -202,7 +202,9 @@ if (Meteor.isServer) {
         'acceptanceCriteria': JSON.parse(acceptanceCriteria),
         'goal': goal,
         'reason': reason,
-        'estimates': {}
+        'estimates': {},
+        'intranet': intranet,
+        'redmine': redmine
       };
       scrum.backlog.push(story);
 
