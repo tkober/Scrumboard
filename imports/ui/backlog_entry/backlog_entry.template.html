@@ -6,7 +6,6 @@
           <h5>{{ userstory.epic }}</h5>
         </td>
         <td class="right">
-          <!-- Split button -->
           <div class="btn-group">
             <button type="button" class="btn story-actions btn-sm" ng-if="canAddToBacklog()" ng-click="addToSprintBacklog()"><span class="glyphicon glyphicon-ok-circle"></span></button>
             <button type="button" class="btn story-actions btn-sm" ng-if="canRemoveFromBacklog()" ng-click="removeFromSprintBacklog()"><span class="glyphicon glyphicon-ban-circle"></span></button>
@@ -32,33 +31,6 @@
             </ul>
           </div>
         </td>
-
-        <!-- <td class="right">
-          <div class="dropdown" ng-class="{ disabled: isInSprintBacklog() }">
-            <a href ng-if="canAddToBacklog()" ng-click="addToSprintBacklog()"><span class="glyphicon glyphicon-ok-circle"></span></a>
-            <a href ng-if="canRemoveFromBacklog()" ng-click="removeFromSprintBacklog()"><span class="glyphicon glyphicon-ban-circle"></span></a>
-
-            <a href ng-click="increase_priority()"><span class="glyphicon glyphicon-chevron-up"></span></a>
-            <a href ng-click="decrease_priority()"><span class="glyphicon glyphicon-chevron-down"></span></a>
-
-            <button class="btn btn-default btn-sm dropdown-toggle story-actions" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              <span class="glyphicon glyphicon-option-vertical"></span>
-            </button>
-
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li ng-if="planning">
-                <a href ng-click="resetEstimate()"><span class="glyphicon glyphicon-repeat"></span> Reset estimates</a>
-              </li>
-              <li>
-                <a href=""><span class="glyphicon glyphicon-wrench"></span> Edit</a>
-              </li>
-              <li role="separator" class="divider"></li>
-              <li>
-                <a href ng-click="deleteStory()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
-              </li>
-            </ul>
-          </div>
-        </td> -->
       </tr>
 
       <tr id="persona-row">

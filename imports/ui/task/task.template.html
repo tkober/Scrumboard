@@ -6,11 +6,12 @@
           <span class="difficulty">{{ task.difficulty }}</span>
         </td>
         <td class="right">
-          <div class="dropdown">
-            <button class="btn btn-default btn-xs dropdown-toggle task-actions" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              <span class="glyphicon glyphicon-option-vertical"></span>
-            </button>
 
+          <div class="btn-group">
+            <button type="button" class="btn task-actions btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-option-vertical"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
             <ul class="dropdown-menu">
               <li class="dropdown-header">Move task to</li>
               <li ng-if="taskStatus != 'todo'">
@@ -31,6 +32,7 @@
               </li>
             </ul>
           </div>
+
         </td>
       </tr>
       <tr>
