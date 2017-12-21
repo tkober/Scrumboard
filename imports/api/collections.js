@@ -607,6 +607,12 @@ if (Meteor.isServer) {
           }
         }
       );
+
+      if (to === 'done') {
+        return true;
+      } else {
+        return false;
+      }
     },
 
 
