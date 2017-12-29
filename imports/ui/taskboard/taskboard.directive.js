@@ -8,7 +8,8 @@ angular.module('scrumboard').directive('taskboard', function() {
     templateUrl: 'imports/ui/taskboard/taskboard.template.html',
     controller: 'TaskboardController',
     scope: {
-      scrum: '='
+      scrum: '=',
+      cresteTaskCall: '='
     }
   };
 });

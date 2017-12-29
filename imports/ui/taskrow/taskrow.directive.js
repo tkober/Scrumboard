@@ -9,7 +9,8 @@ angular.module('scrumboard').directive('taskrow', function() {
     controller: 'TaskrowController',
     scope: {
       scrum: '=',
-      story: '='
+      story: '=',
+      cresteTaskCall: '='
     }
   };
 });

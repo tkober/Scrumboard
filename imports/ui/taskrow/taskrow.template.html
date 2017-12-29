@@ -47,39 +47,3 @@
   </div>
 
 </div>
-
-<div id="createTaskModal_{{story.id}}" class="modal fade noselect drk-modal" role="dialog">
-  <div class="modal-dialog result-modal">
-
-    <div class="modal-content">
-      <div class="modal-header">
-
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Create Task</h4>
-
-      </div>
-      <div class="modal-body">
-        <label>Description</label>
-        <textarea class="form-control drk-textarea" rows="2" ng-model="taskDescription"></textarea>
-
-        <label>Difficulty</label>
-        <div class="list-group">
-          <a href ng-repeat="d in DIFFICULTIES"
-            ng-click="setTaskDifficulty(d.number)"
-            ng-class="{ 'list-group-item-selected': d.number == taskDifficulty }"
-            class="list-group-item">{{ d.text }}</a>
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success" data-dismiss="modal" ng-click="saveTask()" ng-disabled="!isValidTask()">
-          <span class="glyphicon glyphicon-ok"></span> Save
-        </button>
-        <button class="btn btn-danger" data-dismiss="modal">
-          <span class="glyphicon glyphicon-remove"></span> Cancel
-        </button>
-      </div>
-    </div>
-
-  </div>
-</div>
