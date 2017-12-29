@@ -1,5 +1,5 @@
 <div class="list-group">
-  <div class="list-item not-interactable">
+  <div class="list-item not-interactable" ng-class="{ 'in-sprint-backlog': canRemoveFromBacklog(), 'valid-for-sprint-backlog': canAddToBacklog() }">
     <table style="width: 100%">
       <tr>
         <td>
