@@ -135,7 +135,7 @@ if (Meteor.isServer) {
         }, {
           $set: {
             'name': name,
-            'participants': participants
+            'participants': JSON.parse(participants)
           }
         }
       );
