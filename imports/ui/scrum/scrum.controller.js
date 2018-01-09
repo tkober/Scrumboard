@@ -164,4 +164,11 @@ angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive
     }, 500);
   };
 
+  $scope.backlogSize = function() {
+    if ($scope.scrum && $scope.scrum.backlog) {
+      return $scope.scrum.backlog.length;
+    }
+    return 0;
+  };
+
 }]);

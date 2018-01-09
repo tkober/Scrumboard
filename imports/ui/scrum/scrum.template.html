@@ -54,7 +54,7 @@
 
         <!-- Backlog -->
         <li class="menu-item" ng-class="{ active: view == BACKLOG }" ng-show="hasNoSprint() || hasActiveSprint()">
-          <a href ng-click="view = BACKLOG"><span class="glyphicon glyphicon-th-list"></span> Backlog</a>
+          <a href ng-click="view = BACKLOG"><span class="glyphicon glyphicon-th-list"></span> Backlog ({{ backlogSize() }})</a>
         </li>
 
         <!-- Personas -->
