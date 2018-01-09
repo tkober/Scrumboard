@@ -69,8 +69,14 @@ angular.module('scrumboard').config(function($stateProvider, $urlRouterProvider)
     controller: 'EditPersonasController'
   })
 
-  .state('edit_user_story', {
+  .state('create_user_story', {
     url: '/scrums/:scrumId/backlog/story',
+    templateUrl: 'imports/ui/edit_user_story/edit_user_story.template.html',
+    controller: 'EditUserStoryController'
+  })
+
+  .state('edit_user_story', {
+    url: '/scrums/:scrumId/backlog/story/:storyId',
     templateUrl: 'imports/ui/edit_user_story/edit_user_story.template.html',
     controller: 'EditUserStoryController'
   });

@@ -4,12 +4,16 @@ import './edit_user_story.less';
 angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$location', '$stateParams', '$reactive', function($scope, $location, $stateParams, $reactive) {
   $reactive(this).attach($scope);
 
+  $scope.storyToEdit = $stateParams.storyId;
+
   $scope.error = null;
   $scope.personas = [];
   $scope.goal = null;
   $scope.reason = null;
   $scope.newAC = null;
   $scope.epic = null;
+  $scope.intranet = null;
+  $scope.redmine = null;
   $scope.acceptanceCriteria = [];
 
   Meteor.call('scrums.personas.get', $stateParams.scrumId, (error, result) => {
@@ -20,22 +24,58 @@ angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$
     }
   });
 
-  $scope.save = function() {
-    Meteor.call('scrums.userstories.create', $scope.epic,
-    angular.toJson($scope.personas),
-    angular.toJson($scope.acceptanceCriteria),
-    $scope.goal,
-    $scope.reason,
-    $stateParams.scrumId,
-    $scope.intranet,
-    $scope.redmine, (error, result) => {
-      if (error) {
-        $scope.error = error;
-      } else {
-        $scope.cancel();
+  if ($scope.storyToEdit) {
+    this.call('scrums.userstories.get', $stateParams.scrumId, $scope.storyToEdit, (error, result) => {
+      $scope.error = error;
+      if (!error) {
+        $scope.epic = result.epic;
+        $scope.personas = result.personas;
+        $scope.goal = result.goal;
+        $scope.reason = result.reason;
+        $scope.acceptanceCriteria = result.acceptanceCriteria;
+        $scope.intranet = result.intranet;
+        $scope.redmine = result.redmine;
       }
-      $scope.$apply();
     });
+  }
+
+  $scope.save = function() {
+    if ($scope.storyToEdit) {
+      // Update existing
+      Meteor.call('scrums.userstories.update', $scope.storyToEdit,
+      $scope.epic,
+      angular.toJson($scope.personas),
+      angular.toJson($scope.acceptanceCriteria),
+      $scope.goal,
+      $scope.reason,
+      $stateParams.scrumId,
+      $scope.intranet,
+      $scope.redmine, (error, result) => {
+        if (error) {
+          $scope.error = error;
+        } else {
+          $scope.cancel();
+        }
+        $scope.$apply();
+      });
+    } else {
+      // Create new
+      Meteor.call('scrums.userstories.create', $scope.epic,
+      angular.toJson($scope.personas),
+      angular.toJson($scope.acceptanceCriteria),
+      $scope.goal,
+      $scope.reason,
+      $stateParams.scrumId,
+      $scope.intranet,
+      $scope.redmine, (error, result) => {
+        if (error) {
+          $scope.error = error;
+        } else {
+          $scope.cancel();
+        }
+        $scope.$apply();
+      });
+    }
   };
 
   $scope.addPersona = function(persona) {

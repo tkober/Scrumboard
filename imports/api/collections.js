@@ -245,6 +245,65 @@ if (Meteor.isServer) {
       );
     },
 
+    'scrums.userstories.get' (scrumId, storyId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      var story = null;
+      for (var i = 0; i < scrum.backlog.length; i++) {
+        s = scrum.backlog[i];
+        if (s.id === storyId) {
+          story = s;
+          break;
+        }
+      }
+      if (story == null) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id');
+      }
+
+      return story;
+    },
+
+    'scrums.userstories.update' (storyId, epic, personas, acceptanceCriteria, goal, reason, scrumId, intranet, redmine) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      scrum = getScrum(scrumId);
+
+      var story = null;
+      for (var i = 0; i < scrum.backlog.length; i++) {
+        s = scrum.backlog[i];
+        if (s.id === storyId) {
+          story = s;
+          break;
+        }
+      }
+      if (story == null) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id');
+      }
+      story.epic = epic;
+      story.personas = JSON.parse(personas);
+      story.acceptanceCriteria = JSON.parse(acceptanceCriteria);
+      story.goal = goal;
+      story.reason = reason;
+      story.estimates = {};
+      story.intranet = intranet;
+      story.redmine = redmine;
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'backlog': scrum.backlog
+          }
+        }
+      );
+    },
+
     'scrums.userstories.estimate' (scrumId, storyId, estimate) {
       if (!Meteor.userId()) {
         throw new Meteor.Error('not-authorized');
