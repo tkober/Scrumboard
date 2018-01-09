@@ -96,4 +96,8 @@ angular.module('scrumboard').controller('PlanningController', ['$scope', '$locat
     return $scope.scrum.sprint.backlog.length > 0;
   }
 
+  $scope.createUserStory = function() {
+    $location.path('/scrums/' + $scope.scrum._id + '/backlog/story');
+  };
+
 }]);

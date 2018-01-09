@@ -5,8 +5,13 @@
 
     <!-- Header -->
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-8">
         <h2>Sprint Planning</h2>
+      </div>
+      <div class="col-xs-4 right add-button-container">
+        <button class="btn btn-info" ng-click="createUserStory()" ng-if="planningStarted()">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
       </div>
     </div>
 
