@@ -531,7 +531,14 @@ if (Meteor.isServer) {
         throw new Meteor.Error(400, 'The pending sprint cannot be started');
       }
 
-      var sprint_backlog = [];
+      var sprint_backlog = [{
+        'id': 'priority_line',
+        'epic': 'PRIORITY LINE',
+        'personas': [],
+        'acceptanceCriteria': [],
+        'estimates': {},
+        'tasks': { todo: [], inProgress: [], review: [], done:[] }
+      }];
       for (var i = 0; i < scrum.backlog.length; i++) {
         var story = scrum.backlog[i];
         if (scrum.sprint.backlog.indexOf(story.id) != -1) {

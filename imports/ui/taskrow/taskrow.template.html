@@ -6,7 +6,7 @@
           <span class="epic">{{ story.epic }}</span>
         </td>
         <td>
-          <span class="text">As <span ng-repeat="persona in story.personas" class="persona"><a href> {{ persona.title }}</a>, </span>{{ personalPronoun() }} want {{ story.goal }}</span>
+          <span class="text" ng-if="story.id != 'priority_line'">As <span ng-repeat="persona in story.personas" class="persona"><a href> {{ persona.title }}</a>, </span>{{ personalPronoun() }} want {{ story.goal }}</span>
         </td>
       </tr>
     </table>
