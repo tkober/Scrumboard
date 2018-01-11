@@ -50,6 +50,30 @@
       </div>
     </div>
 
+    <!-- Header -->
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>Description [html]</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <textarea class="form-control drk-textarea" rows="2" id="comment" ng-model="html"></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 action-buttons">
+        <button class="btn btn-primary btn-xs" ng-click="showPreview = true" ng-show="!showPreview">
+          <span class="glyphicon glyphicon-picture"></span> Show preview
+        </button>
+        <button class="btn btn-primary btn-xs" ng-click="showPreview = false" ng-show="showPreview">
+          <span class="glyphicon glyphicon-picture"></span> Hide preview
+        </button>
+      </div>
+    </div>
+
     <!-- Buttons -->
     <div class="row">
       <div class="col-xs-12 right action-buttons">
@@ -61,6 +85,13 @@
           <span class="glyphicon glyphicon-remove"></span> Cancel
         </button>
 
+      </div>
+    </div>
+
+    <div class="row" ng-if="showPreview">
+      <div class="col-xs-12">
+        <h4>Preview</h1>
+        <div class="html-preivew" ng-bind-html="html | trust"></div>
       </div>
     </div>
 

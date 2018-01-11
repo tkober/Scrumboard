@@ -7,4 +7,8 @@ angular.module('scrumboard').controller('BacklogController', ['$scope', '$reacti
     $location.path('/scrums/' + $scope.scrum._id + '/backlog/story');
   };
 
+  $scope.showPersona = function(persona) {
+    $scope.$parent.showPersona(persona);
+  };
+
 }]);

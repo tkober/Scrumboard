@@ -12,4 +12,12 @@ angular.module('scrumboard').controller('TaskrowController', ['$scope', function
     $scope.$parent.createTask($scope.story.id);
   };
 
+  $scope.showPersona = function(persona) {
+    Meteor.call('scrums.persona.get', $scope.scrum._id, persona, (error, result) => {
+      if (!error) {
+        $scope.$parent.showPersona(result);
+      }
+    });
+  };
+
 }]);

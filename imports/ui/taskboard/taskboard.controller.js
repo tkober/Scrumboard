@@ -8,4 +8,8 @@ angular.module('scrumboard').controller('TaskboardController', ['$scope', '$loca
     $scope.$parent.createTask(storyId);
   };
 
+  $scope.showPersona = function(persona) {
+    $scope.$parent.showPersona(persona);
+  };
+
 }]);

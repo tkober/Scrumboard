@@ -7,4 +7,8 @@ angular.module('scrumboard').controller('PersonasController', ['$scope', '$react
     $location.path('/scrums/' + $scope.scrum._id + '/personas/');
   };
 
+  $scope.showPersona = function(persona) {
+    $scope.$parent.showPersona(persona);
+  };
+
 }]);

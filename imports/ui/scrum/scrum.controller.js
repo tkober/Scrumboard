@@ -171,4 +171,11 @@ angular.module('scrumboard').controller('ScrumController', ['$scope', '$reactive
     return 0;
   };
 
+  $scope.showPersona = function(persona) {
+    $scope.personaToShow = persona;
+    $timeout(function() {
+      $('#show_persona_modal').modal('show');
+    }, 100);
+  };
+
 }]);

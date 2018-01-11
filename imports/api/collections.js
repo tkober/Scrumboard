@@ -155,7 +155,7 @@ if (Meteor.isServer) {
       });
     },
 
-    'scrums.personas.create' (name, scrumId) {
+    'scrums.personas.create' (scrumId, name, html) {
       if (!Meteor.userId()) {
         throw new Meteor.Error('not-authorized');
       }
@@ -166,11 +166,11 @@ if (Meteor.isServer) {
       for (i = 0; i < scrum.personas.length; i++) {
         persona = scrum.personas[i];
         if (persona.name.toUpperCase() === name.toUpperCase()) {
-          throw new Meteor.Error(400, 'A person with that name already exists for the specified scrum!');
+          throw new Meteor.Error(400, 'A persona with that name already exists for the specified scrum!');
         }
       }
 
-      persona = { 'name': name };
+      persona = { 'name': name, 'html': html };
       scrum.personas.push(persona);
 
       Scrums.update(scrumUpdateSelector(scrumId), {
@@ -181,9 +181,49 @@ if (Meteor.isServer) {
       );
     },
 
-    'scrums.personas.get' (id) {
-      scrum = Meteor.call('scrums.get', id);
+    'scrums.personas.update' (scrumId, oldName, name, html) {
+      Meteor.call('scrums.persona.delete', scrumId, oldName);
+      Meteor.call('scrums.personas.create', scrumId, name, html);
+    },
+
+    'scrums.personas.get' (scrumId) {
+      scrum = Meteor.call('scrums.get', scrumId);
       return scrum.personas;
+    },
+
+    'scrums.persona.get' (scrumId, persona) {
+      personas = Meteor.call('scrums.personas.get', scrumId);
+      for (var i = 0; i < personas.length; i++) {
+        p = personas[i];
+        if (p.name == persona) {
+          return p;
+        }
+      }
+      throw new Meteor.Error(400, 'A persona with the specified name does not exist!');
+    },
+
+    'scrums.persona.delete' (scrumId, persona) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      var scrum = getScrum(scrumId);
+
+      for (var i = 0; i < scrum.personas.length; i++) {
+        var p = scrum.personas[i];
+        if (p.name == persona) {
+          scrum.personas.splice(i, 1);
+          break;
+        }
+      }
+
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'personas': scrum.personas
+          }
+        }
+      );
     },
 
     'scrums.userstories.create' (epic, personas, acceptanceCriteria, goal, reason, scrumId, intranet, redmine) {

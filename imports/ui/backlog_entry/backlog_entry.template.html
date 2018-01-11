@@ -41,7 +41,7 @@
       <div class="col-xs-12">
         <span class="userstory-text">As
           <span ng-repeat="persona in userstory.personas">
-            <a href=""> {{ persona.title }}</a>,
+            <a href ng-click="showPersona(persona.id)"> {{ persona.title }}</a>,
           </span>
         </span>
       </div>

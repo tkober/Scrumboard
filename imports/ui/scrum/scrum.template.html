@@ -211,3 +211,21 @@
 
   </div>
 </div>
+
+<div id="show_persona_modal" class="modal fade noselect drk-modal" role="dialog">
+  <div class="modal-dialog result-modal">
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h1 class="modal-title">{{ personaToShow.name }}</h1>
+
+      </div>
+      <div class="modal-body">
+        <div ng-bind-html="personaToShow.html | trust"></div>
+      </div>
+    </div>
+
+  </div>
+</div>

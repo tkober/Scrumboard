@@ -1,42 +1,38 @@
+import './edit_personas.less';
+
+
 angular.module('scrumboard').controller('EditPersonasController', ['$scope', '$location', '$stateParams', '$reactive', function($scope, $location, $stateParams, $reactive) {
   $reactive(this).attach($scope);
 
-  $scope.personaToEdit = $stateParams.personId;
+  $scope.personaToEdit = $stateParams.personaId;
 
   $scope.error = null;
   $scope.name = null;
-
+  $scope.html = '';
+  $scope.showPreview = false;
 
   if ($scope.personaToEdit) {
-    // this.call('scrums.get', $scope.scrumToEdit, (error, result) => {
-    //   $scope.error = error;
-    //   if (!error) {
-    //     $scope.title = result.name;
-    //     load_users(this, function() {
-    //       users = $scope.users.slice()
-    //       for (i = 0; i < users.length; i++) {
-    //         user = users[i];
-    //         if (result.participants.indexOf(user._id) != -1) {
-    //           $scope.invite(user);
-    //         }
-    //       }
-    //     });
-    //   }
-    // });
+    this.call('scrums.persona.get', $stateParams.scrumId, $scope.personaToEdit, (error, result) => {
+      $scope.error = error;
+      if (!error) {
+        $scope.name = result.name;
+        $scope.html = result.html;
+      }
+    });
   }
 
   $scope.save = function() {
     if ($scope.personaToEdit) {
-      // Meteor.call('scrums.update', $scope.scrumToEdit, $scope.title, angular.toJson(participantsIds), (error, result) => {
-      //   if (error) {
-      //     $scope.error = error;
-      //   } else {
-      //     $scope.cancel();
-      //   }
-      //   $scope.$apply();
-      // });
+      Meteor.call('scrums.personas.update', $stateParams.scrumId, $scope.personaToEdit, $scope.name, $scope.html, (error, result) => {
+        if (error) {
+          $scope.error = error;
+        } else {
+          $scope.cancel();
+        }
+        $scope.$apply();
+      });
     } else {
-      Meteor.call('scrums.personas.create', $scope.name, $stateParams.scrumId, (error, result) => {
+      Meteor.call('scrums.personas.create', $stateParams.scrumId, $scope.name, $scope.html, (error, result) => {
         if (error) {
           $scope.error = error;
         } else {
@@ -66,4 +62,8 @@ angular.module('scrumboard').controller('EditPersonasController', ['$scope', '$l
     });
   };
 
+}]).filter("trust", ['$sce', function($sce) {
+  return function(htmlCode){
+    return $sce.trustAsHtml(htmlCode);
+  }
 }]);

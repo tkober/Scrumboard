@@ -11,7 +11,10 @@ angular.module('scrumboard').controller('PersonaEntryController', ['$scope', '$l
   };
 
   $scope.delete = function() {
-    // Meteor.call('scrums.delete', $scope.scrum._id);
+    Meteor.call('scrums.persona.delete', $scope.scrum._id, $scope.persona.name, (error) => {
+      $scope.error = error;
+      $scope.$apply();
+    });
   };
 
   $scope.isOwner = function() {
