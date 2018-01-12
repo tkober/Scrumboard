@@ -31,6 +31,10 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
     return estimate == $scope.userstory.estimates[Meteor.userId()];
   };
 
+  $scope.myEstimate = function() {
+    return $scope.userstory.estimates[Meteor.userId()];
+  }
+
   $scope.estimate = function(estimate) {
     Meteor.call('scrums.userstories.estimate', $scope.scrum._id, $scope.userstory.id, estimate, (error) => {
       $scope.error = error;
