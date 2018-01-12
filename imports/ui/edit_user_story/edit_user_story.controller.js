@@ -1,7 +1,7 @@
 import './edit_user_story.less';
 
 
-angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$location', '$stateParams', '$reactive', function($scope, $location, $stateParams, $reactive) {
+angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$location', '$stateParams', '$reactive', '$timeout', function($scope, $location, $stateParams, $reactive, $timeout) {
   $reactive(this).attach($scope);
 
   $scope.storyToEdit = $stateParams.storyId;
@@ -143,6 +143,17 @@ angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$
   $scope.logout = function() {
     Meteor.logout(function(error) {
       console.log(error);
+    });
+  };
+
+  $scope.showPersona = function(persona) {
+    Meteor.call('scrums.persona.get', $stateParams.scrumId, persona, (error, result) => {
+      if (!error) {
+        $scope.personaToShow = result;
+        $timeout(function() {
+          $('#show_persona_modal').modal('show');
+        }, 100);
+      }
     });
   };
 

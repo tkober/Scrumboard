@@ -58,7 +58,8 @@
             <span>As</span>
 
             <span class="persona-box" ng-repeat="persona in personas">
-              <a href="" ng-click="removePersona(persona)"><span class="glyphicon glyphicon-remove"></span></a>{{ persona.title }}
+              <a href ng-click="removePersona(persona)"><span class="glyphicon glyphicon-remove"></span></a>
+              <a class="persona-ref" href ng-click="showPersona(persona.id)">{{ persona.title }}</a>
             </span>
 
             <button class="btn btn-info btn-xs dropdown-toggle add-persona-button" type="button" data-toggle="dropdown">
@@ -159,5 +160,24 @@
     </div>
 
     <div class="col-md-3">
+    </div>
+  </div>
+
+
+  <div id="show_persona_modal" class="modal fade noselect drk-modal" role="dialog">
+    <div class="modal-dialog result-modal">
+
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h1 class="modal-title">{{ personaToShow.name }}</h1>
+
+        </div>
+        <div class="modal-body">
+          <div ng-bind-html="personaToShow.html | trust"></div>
+        </div>
+      </div>
+
     </div>
   </div>
