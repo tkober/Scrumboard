@@ -2,7 +2,7 @@
   <div class="col-xs-11">
     <table>
       <tr>
-        <td style="white-space: nowrap;">
+        <td class="epic-cell">
           <span class="epic">{{ story.epic }}</span>
         </td>
         <td>
@@ -11,6 +11,17 @@
               <a href ng-click="showPersona(persona.id)"> {{ persona.title }}</a>,
             </span>
             {{ personalPronoun() }} want {{ story.goal }}
+            <div ng-show="showEntireStory">
+              <span>so that {{ story.goal }}</span>
+              <div class="userstory-section-container">
+                <span class="userstory-section">Acceptance Criteria</span>
+                <ul>
+                  <li ng-repeat="ac in story.acceptanceCriteria">{{ ac }}</li>
+                </ul>
+              </div>
+              <a href ng-click="showEntireStory=false"><span>[hide details]</span></a>
+            </div>
+            <a href ng-click="showEntireStory=true" ng-show="!showEntireStory">[...]</a>
           </span>
         </td>
       </tr>
