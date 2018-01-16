@@ -8,7 +8,8 @@ angular.module('scrumboard').controller('BurndownController', ['$scope', '$filte
     return {
       id: idFromTimestamp(date),
       label: $filter('date')(date, 'EEE') ,
-      taskCount: 0
+      taskCount: 0,
+      isFuture: date > new Date()
     };
   }
 
@@ -37,12 +38,16 @@ angular.module('scrumboard').controller('BurndownController', ['$scope', '$filte
     }
 
     var max = 0;
+    var last = 0;
     for (var i = 0; i < result.length; i++) {
       var day = result[i];
       if (countMap[day.id]) {
         var count = countMap[day.id];
         max = Math.max(max, count);
         day.taskCount = count;
+        last = count;
+      } else if (!day.isFuture) {
+        day.taskCount = last;
       }
     }
 
