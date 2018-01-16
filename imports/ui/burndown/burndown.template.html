@@ -19,7 +19,7 @@
 
           <tr>
 
-            <td ng-repeat="day in days">
+            <td ng-repeat="day in days" style="width: {{ 100 / days.length }}%">
               <div class="indicator-box">
                 <div class="indicator" style="height: {{ day.taskCount / maximumTaskCount * 100 }}%"></div>
               </div>
