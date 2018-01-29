@@ -67,7 +67,7 @@ angular.module('scrumboard').controller('PlanningController', ['$scope', '$locat
       var story = $scope.scrum.backlog[i];
       if ($scope.scrum.sprint.backlog.indexOf(story.id) != -1) {
         // console.log(story.id);
-        result += story.estimates[Meteor.userId()];
+        result += parseInt(story.estimates[Meteor.userId()]);
       }
     }
     return result;

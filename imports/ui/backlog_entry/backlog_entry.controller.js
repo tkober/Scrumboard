@@ -25,7 +25,7 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
     return $scope.userstory.personas.length > 1 ? 'We' : 'I';
   };
 
-  $scope.ESTIMATES = [1, 2, 3, 5, 8, 13, 20, 40, 100];
+  $scope.ESTIMATES = ["1", "2", "3", "5", "8", "13", "20", "40", "100", "?"];
 
   $scope.isMyEstimate = function(estimate) {
     return estimate == $scope.userstory.estimates[Meteor.userId()];
@@ -78,19 +78,28 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
   $scope.estimateExtrema = function() {
     var min = 9999;
     var max = 0;
+    var unclear = false;
     for (var i = 0; i < $scope.scrum.sprint.planningParticipants.length; i++) {
       var p_id = $scope.scrum.sprint.planningParticipants[i];
       if ($scope.userstory.estimates[p_id]) {
         var estimate = $scope.userstory.estimates[p_id];
-        max = Math.max(max, estimate);
-        min = Math.min(min, estimate);
+        if (estimate != '?') {
+          max = Math.max(max, parseInt(estimate));
+          min = Math.min(min, parseInt(estimate));
+        } else {
+          unclear = true;
+        }
       }
     }
-    return { 'min': min, 'max': max };
+    return { 'unclear': unclear, 'min': min, 'max': max };
   };
 
   $scope.minimumEstimate = function() {
     return $scope.estimateExtrema().min;
+  };
+
+  $scope.isUnclear = function() {
+    return $scope.estimateExtrema().unclear;
   };
 
   $scope.maximumEstimate = function() {
@@ -98,7 +107,8 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
   };
 
   $scope.compliantEstimate = function() {
-    return $scope.minimumEstimate() == $scope.maximumEstimate();
+    var extrema = $scope.estimateExtrema();
+    return !extrema.unclear && (extrema.min == extrema.max);
   };
 
   $scope.resetEstimate = function () {

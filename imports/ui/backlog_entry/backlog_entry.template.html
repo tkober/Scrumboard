@@ -95,9 +95,9 @@
 
         <div class="" ng-if="!showEstimatePanel() && missingEstimatesCount() == 0">
           <div ng-if="!compliantEstimate()">
-            <span>{{ minimumEstimate() }}</span>
-            <span> - </span>
-            <span>{{ maximumEstimate() }}</span>
+            <span ng-show="!isUnclear()">{{ minimumEstimate() }}</span>
+            <span ng-show="!isUnclear()"> - </span>
+            <span>{{ isUnclear() ? '?' : maximumEstimate() }}</span>
             <span> ({{ myEstimate() }})</span>
           </div>
           <div ng-if="compliantEstimate()">
