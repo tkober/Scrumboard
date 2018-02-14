@@ -1,4 +1,5 @@
 export const Scrums = new Mongo.Collection('scrums');
+export const RetiredSprints = new Mongo.Collection('retired_sprints');
 
 if (Meteor.isServer) {
 
@@ -825,6 +826,10 @@ if (Meteor.isServer) {
       if (scrum.sprint == null || scrum.sprint.status != 'ended') {
         throw new Meteor.Error(400, 'There is no ended sprint');
       }
+
+      var retiredSprint = scrum.sprint;
+      retiredSprint.scrum = scrum._id;
+      RetiredSprints.insert(retiredSprint);
 
       // Inverse to keep priorities
       for (var i = scrum.sprint.backlog.length-1; i >= 0; i--) {
