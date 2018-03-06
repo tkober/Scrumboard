@@ -42,10 +42,15 @@
 
     <!-- Epic -->
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-9">
         <div class="input-group epic-input-group">
           <span class="input-group-addon" id="basic-addon1">Epic</span>
           <input type="text" class="form-control" placeholder="Enter the epic" ng-model="epic">
+        </div>
+      </div>
+      <div class="col-xs-3 right">
+        <div class="btn-group estimate-box" role="group" aria-label="...">
+          <button type="button" class="btn btn-default estimate-button" ng-class="{ active: l.id == language }" ng-repeat="l in languages" ng-click="setLanguage(l)">{{ l.name }}</button>
         </div>
       </div>
     </div>
@@ -55,7 +60,7 @@
         <div class="input-group persona-group">
 
           <div class="dropdown">
-            <span>As</span>
+            <span>{{ getLanguage().as }}</span>
 
             <span class="persona-box" ng-repeat="persona in personas">
               <a href ng-click="removePersona(persona)"><span class="glyphicon glyphicon-remove"></span></a>
@@ -75,14 +80,14 @@
 
       <div class="row">
         <div class="col-xs-12">
-          <span>{{ personalPronoun() }} want</span>
+          <span>{{ personalPronoun_want() }}</span>
           <textarea class="form-control drk-textarea" rows="2" id="comment" ng-model="goal"></textarea>
         </div>
       </div>
 
       <div class="row">
         <div class="col-xs-12">
-          <span>so that</span>
+          <span>{{ getLanguage().so_that }}</span>
           <textarea class="form-control drk-textarea" rows="2" id="comment" ng-model="reason"></textarea>
         </div>
       </div>

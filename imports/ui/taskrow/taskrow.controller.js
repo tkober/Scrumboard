@@ -1,12 +1,9 @@
 import '../task/task.directive.js';
 import './taskrow.less';
+import * as langs from '../../api/languages.js';
 
 
 angular.module('scrumboard').controller('TaskrowController', ['$scope', function($scope) {
-
-  $scope.personalPronoun = function() {
-    return $scope.story.personas.length > 1 ? 'we' : 'I';
-  };
 
   $scope.createTask = function() {
     $scope.$parent.createTask($scope.story.id);
@@ -18,6 +15,21 @@ angular.module('scrumboard').controller('TaskrowController', ['$scope', function
         $scope.$parent.showPersona(result);
       }
     });
+  };
+
+  $scope.personalPronoun_want = function() {
+    var l = $scope.getLanguage();
+    return $scope.story.personas.length > 1 ? l.we_want : l.i_want;
+  };
+
+  $scope.getLanguage = function() {
+    for (var i = 0; i < langs.languages.length; i++) {
+      var l = langs.languages[i];
+      if (l.id == $scope.story.language) {
+        return l;
+      }
+    }
+    return langs.EN;
   };
 
 }]);

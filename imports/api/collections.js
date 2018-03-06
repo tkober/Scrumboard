@@ -227,7 +227,7 @@ if (Meteor.isServer) {
       );
     },
 
-    'scrums.userstories.create' (epic, personas, acceptanceCriteria, goal, reason, scrumId, intranet, redmine) {
+    'scrums.userstories.create' (epic, personas, acceptanceCriteria, goal, reason, scrumId, intranet, redmine, lang) {
       if (!Meteor.userId()) {
         throw new Meteor.Error('not-authorized');
       }
@@ -245,7 +245,8 @@ if (Meteor.isServer) {
         'reason': reason,
         'estimates': {},
         'intranet': intranet,
-        'redmine': redmine
+        'redmine': redmine,
+        'language': lang
       };
       scrum.backlog.push(story);
 
@@ -309,7 +310,7 @@ if (Meteor.isServer) {
       return story;
     },
 
-    'scrums.userstories.update' (storyId, epic, personas, acceptanceCriteria, goal, reason, scrumId, intranet, redmine) {
+    'scrums.userstories.update' (storyId, epic, personas, acceptanceCriteria, goal, reason, scrumId, intranet, redmine, lang) {
       if (!Meteor.userId()) {
         throw new Meteor.Error('not-authorized');
       }
@@ -336,6 +337,7 @@ if (Meteor.isServer) {
       story.estimates = {};
       story.intranet = intranet;
       story.redmine = redmine;
+      story.language = lang;
 
       Scrums.update(scrumUpdateSelector(scrumId), {
           $set: {

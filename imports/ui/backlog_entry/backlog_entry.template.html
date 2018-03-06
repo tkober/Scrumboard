@@ -39,7 +39,7 @@
     <!-- Persona -->
     <div class="row" id="persona-row">
       <div class="col-xs-12">
-        <span class="userstory-text">As
+        <span class="userstory-text">{{ getLanguage().as }}
           <span ng-repeat="persona in userstory.personas">
             <a href ng-click="showPersona(persona.id)"> {{ persona.title }}</a>,
           </span>
@@ -50,14 +50,14 @@
     <!-- Goal -->
     <div class="row">
       <div class="col-xs-12">
-        <span class="userstory-text">{{ personalPronoun() }} want {{ userstory.goal }}</span>
+        <span class="userstory-text">{{ personalPronoun_want() }} {{ userstory.goal }}</span>
       </div>
     </div>
 
     <!-- Reason -->
     <div class="row">
       <div class="col-xs-12">
-        <span class="userstory-text">so that {{ userstory.reason }}.</span>
+        <span class="userstory-text">{{ getLanguage().so_that }} {{ userstory.reason }}.</span>
       </div>
     </div>
 

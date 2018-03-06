@@ -6,13 +6,13 @@
           <span class="epic">{{ story.epic }}</span>
         </td>
         <td>
-          <span class="text" ng-if="story.id != 'priority_line'">As
+          <span class="text" ng-if="story.id != 'priority_line'">{{ getLanguage().as }}
             <span ng-repeat="persona in story.personas" class="persona">
               <a href ng-click="showPersona(persona.id)"> {{ persona.title }}</a>,
             </span>
-            {{ personalPronoun() }} want {{ story.goal }}
+            {{ personalPronoun_want() }} {{ story.goal }}
             <div ng-show="showEntireStory">
-              <span>so that {{ story.reason }}</span>
+              <span>{{ getLanguage().so_that }} {{ story.reason }}</span>
               <div class="userstory-section-container">
                 <span class="userstory-section">Acceptance Criteria</span>
                 <ul>

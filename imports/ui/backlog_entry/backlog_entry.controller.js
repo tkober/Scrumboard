@@ -1,4 +1,5 @@
 import './backlog_entry.less';
+import * as langs from '../../api/languages.js';
 
 
 angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$location', function($scope, $location) {
@@ -21,8 +22,9 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
     $location.path('/scrums/' + $scope.scrum._id + '/backlog/story/' + $scope.userstory.id);
   };
 
-  $scope.personalPronoun = function() {
-    return $scope.userstory.personas.length > 1 ? 'We' : 'I';
+  $scope.personalPronoun_want = function() {
+    var l = $scope.getLanguage();
+    return $scope.userstory.personas.length > 1 ? l.we_want : l.i_want;
   };
 
   $scope.ESTIMATES = ["1", "2", "3", "5", "8", "13", "20", "40", "100", "?"];
@@ -160,6 +162,16 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
         $scope.$parent.showPersona(result);
       }
     });
+  };
+
+  $scope.getLanguage = function() {
+    for (var i = 0; i < langs.languages.length; i++) {
+      var l = langs.languages[i];
+      if (l.id == $scope.userstory.language) {
+        return l;
+      }
+    }
+    return langs.EN;
   };
 
 }]);

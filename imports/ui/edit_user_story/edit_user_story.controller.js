@@ -1,10 +1,12 @@
 import './edit_user_story.less';
+import * as langs from '../../api/languages.js';
 
 
 angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$location', '$stateParams', '$reactive', '$timeout', function($scope, $location, $stateParams, $reactive, $timeout) {
   $reactive(this).attach($scope);
 
   $scope.storyToEdit = $stateParams.storyId;
+  $scope.languages = langs.languages;
 
   $scope.error = null;
   $scope.personas = [];
@@ -15,6 +17,7 @@ angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$
   $scope.intranet = null;
   $scope.redmine = null;
   $scope.acceptanceCriteria = [];
+  $scope.language = langs.EN.id;
 
   Meteor.call('scrums.personas.get', $stateParams.scrumId, (error, result) => {
     $scope.error = error;
@@ -35,6 +38,9 @@ angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$
         $scope.acceptanceCriteria = result.acceptanceCriteria;
         $scope.intranet = result.intranet;
         $scope.redmine = result.redmine;
+        if (result.language) {
+          $scope.language = result.language;
+        }
       }
     });
   }
@@ -50,7 +56,8 @@ angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$
       $scope.reason,
       $stateParams.scrumId,
       $scope.intranet,
-      $scope.redmine, (error, result) => {
+      $scope.redmine,
+      $scope.language, (error, result) => {
         if (error) {
           $scope.error = error;
         } else {
@@ -67,7 +74,8 @@ angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$
       $scope.reason,
       $stateParams.scrumId,
       $scope.intranet,
-      $scope.redmine, (error, result) => {
+      $scope.redmine,
+      $scope.language, (error, result) => {
         if (error) {
           $scope.error = error;
         } else {
@@ -136,8 +144,19 @@ angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$
     return Meteor.user().emails[0].address;
   };
 
-  $scope.personalPronoun = function() {
-    return $scope.personas.length > 1 ? 'We' : 'I';
+  $scope.getLanguage = function() {
+    for (var i = 0; i < langs.languages.length; i++) {
+      var l = langs.languages[i];
+      if (l.id == $scope.language) {
+        return l;
+      }
+    }
+    return langs.EN;
+  };
+
+  $scope.personalPronoun_want = function() {
+    var l = $scope.getLanguage();
+    return $scope.personas.length > 1 ? l.we_want : l.i_want;
   };
 
   $scope.logout = function() {
@@ -155,6 +174,10 @@ angular.module('scrumboard').controller('EditUserStoryController', ['$scope', '$
         }, 100);
       }
     });
+  };
+
+  $scope.setLanguage = function(language) {
+    $scope.language = language.id;
   };
 
 }]);
