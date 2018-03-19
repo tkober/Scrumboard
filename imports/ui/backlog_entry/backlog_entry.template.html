@@ -1,5 +1,18 @@
+<div class="row centered" ng-show="showPlacementMarkers">
+  <div class="col-xs-12">
+    <div class="btn-group insert-button-group">
+      <button type="button" class="btn btn-warning btn-sm" ng-click="insertBefore()">
+        <span class="glyphicon glyphicon-log-in"></span>
+        <span>Insert Here</span>
+      </button>
+      <button type="button" class="btn btn-warning btn-sm" ng-click="cancelDragging()">
+        <span class="glyphicon glyphicon-remove"></span>
+      </button>
+    </div>
+  </div>
+</div>
 <div class="list-group">
-  <div class="list-item not-interactable" ng-class="{ 'in-sprint-backlog': canRemoveFromBacklog(), 'valid-for-sprint-backlog': canAddToBacklog() }">
+  <div class="list-item not-interactable" ng-class="{ 'in-sprint-backlog': canRemoveFromBacklog(), 'valid-for-sprint-backlog': canAddToBacklog(), 'dragged-story': isBeingDragged }">
     <table style="width: 100%">
       <tr>
         <td>
@@ -12,13 +25,19 @@
             <button type="button" class="btn story-actions btn-sm" ng-if="canAddToBacklog()" ng-click="addToSprintBacklog()"><span class="glyphicon glyphicon-ok-circle"></span></button>
             <button type="button" class="btn story-actions btn-sm" ng-if="canRemoveFromBacklog()" ng-click="removeFromSprintBacklog()"><span class="glyphicon glyphicon-ban-circle"></span></button>
 
-            <button type="button" class="btn story-actions btn-sm" ng-click="increase_priority()"><span class="glyphicon glyphicon-chevron-up"></span></button>
-            <button type="button" class="btn story-actions btn-sm" ng-click="decrease_priority()"><span class="glyphicon glyphicon-chevron-down"></span></button>
+            <!-- Dragging -->
+            <button type="button" class="btn story-actions btn-sm" ng-click="startDragging()" ng-show="shouldShowStartDragging()"><span class="glyphicon glyphicon-random"></span></button>
 
-            <button type="button" class="btn story-actions btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <!-- Up / Down voting -->
+            <button type="button" class="btn story-actions btn-sm" ng-click="increase_priority()" ng-show="shouldShowVoteUp()"><span class="glyphicon glyphicon-chevron-up"></span></button>
+            <button type="button" class="btn story-actions btn-sm" ng-click="decrease_priority()" ng-show="shouldShowVoteDown()"><span class="glyphicon glyphicon-chevron-down"></span></button>
+
+            <!-- Actions -->
+            <button type="button" class="btn story-actions btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-show="shouldShowActions()">
               <span class="glyphicon glyphicon-option-vertical"></span>
               <span class="sr-only">Toggle Dropdown</span>
             </button>
+
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
               <li ng-if="planning">
                 <a href ng-click="resetEstimate()"><span class="glyphicon glyphicon-repeat"></span> Reset estimates</a>

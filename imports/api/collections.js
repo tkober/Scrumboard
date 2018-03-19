@@ -375,6 +375,51 @@ if (Meteor.isServer) {
       );
     },
 
+    'scrums.userstories.move_before' (scrumId, storyToMoveId, moveBeforeId) {
+      if (!Meteor.userId()) {
+        throw new Meteor.Error('not-authorized');
+      }
+
+      // Ceck permission
+      var scrum = getScrum(scrumId);
+
+      // Query IDs
+      var moving_id = -1;
+      var move_before_id = -1;
+      for (var i = 0; i < scrum.backlog.length; i++) {
+
+        if (scrum.backlog[i].id == storyToMoveId) {
+          moving_id = i;
+        }
+
+        if (scrum.backlog[i].id == moveBeforeId) {
+          move_before_id = i;
+        }
+      }
+
+      // Check IDs
+      if (moving_id < 0) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id to be moved');
+      }
+
+      if (move_before_id < 0) {
+        throw new Meteor.Error(400, 'There is no backlog item with the specified id to be moved before');
+      }
+
+      // Move
+      var backlog = scrum.backlog;
+      moving_story = backlog.splice(moving_id, 1);
+      backlog.splice(move_before_id, 0, moving_story[0]);
+
+      // Save
+      Scrums.update(scrumUpdateSelector(scrumId), {
+          $set: {
+            'backlog': backlog
+          }
+        }
+      );
+    },
+
     'scrums.userstories.upvote' (scrumId, storyId) {
       if (!Meteor.userId()) {
         throw new Meteor.Error('not-authorized');

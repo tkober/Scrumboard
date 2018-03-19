@@ -15,7 +15,16 @@
       </div>
     </div>
 
-    <backlog-entry ng-repeat="story in scrum.backlog" userstory="story" scrum=scrum></backlog-entry>
+    <backlog-entry ng-repeat="story in scrum.backlog"
+      userstory="story"
+      scrum="scrum"
+      allow-dragging="true && !storyToDrag"
+      show-placement-markers="storyToDrag"
+      on-start-dragging="onStartDragging"
+      is-being-dragged="storyToDrag == story.id"
+      on-end-dragging="onEndDragging"
+      on-insert-before="onInsertBefore">
+    </backlog-entry>
 
   </div>
   <div class="col-md-3">

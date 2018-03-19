@@ -10,7 +10,18 @@ angular.module('scrumboard').directive('backlogEntry', function() {
     scope: {
       userstory: '=',
       scrum: '=',
-      planning: '='
+      planning: '=',
+
+      // Dragging
+      allowDragging: '=',
+      onStartDragging: '=',
+      onEndDragging: '=',
+      isBeingDragged: '=',
+      onInsertBefore: '=',
+
+      // Placement Markers
+      showPlacementMarkers: '=',
+      onPlacedBehind: '='
     }
   };
 });

@@ -6,6 +6,46 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
   $scope.error = null;
   $scope.isDeleting = false;
 
+  $scope.shouldShowStartDragging = function() {
+    return $scope.allowDragging;
+  };
+
+  $scope.shouldShowStopDragging = function() {
+    return $scope.isBeingDragged;
+  };
+
+  $scope.startDragging = function() {
+    $scope.isDragging = true;
+    if ($scope.onStartDragging) {
+      $scope.onStartDragging($scope.userstory.id);
+    }
+  };
+
+  $scope.insertBefore = function() {
+    if ($scope.onInsertBefore) {
+      $scope.onInsertBefore($scope.userstory.id);
+    }
+    $scope.cancelDragging();
+  };
+
+  $scope.cancelDragging = function() {
+    if ($scope.onEndDragging) {
+      $scope.onEndDragging();
+    }
+  };
+
+  $scope.shouldShowVoteUp = function() {
+    return true;
+  };
+
+  $scope.shouldShowVoteDown = function() {
+    return true;
+  };
+
+  $scope.shouldShowActions = function() {
+    return true;
+  };
+
   $scope.startDeleting = function() {
     $scope.isDeleting = true;
   };
