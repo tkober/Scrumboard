@@ -52,9 +52,9 @@
       </table>
 
     </div>
-    <div class="col-xs-1">
-      <span class="done" ng-if="storyDone(story)">Done</span>
-      <span class="pending" ng-if="!storyDone(story)">Pending</span>
+    <div class="col-xs-1 right">
+      <span class="done glyphicon glyphicon-ok-sign" ng-if="storyDone(story)"></span>
+      <span class="pending glyphicon glyphicon-remove-sign" ng-if="!storyDone(story)"></span>
     </div>
   </div>
 
