@@ -76,6 +76,17 @@ if (Meteor.isServer) {
     });
   });
 
+  Meteor.publish('retired_sprints', function(scrum_id) {
+    // TODO: Check Access
+    return RetiredSprints.find({
+      scrum: scrum_id
+    }, {
+      sort: {
+        begin: -1
+      }
+    });
+  });
+
   Meteor.methods({
 
     // Users

@@ -1,0 +1,121 @@
+<div class="">
+
+  <!-- Header -->
+  <div class="row">
+    <div class="col-xs-11">
+      <span>{{ sprint.begin | date }} - {{ sprint.end | date }}</span>
+    </div>
+    <div class="col-xs-1 right">
+      <span>{{ storypoints() }}</span>
+    </div>
+  </div>
+
+  <!-- View Selector -->
+  <div class="row">
+    <div class="col-xs-4 centered">
+      <span><a href ng-click="view = STORIES">Stories</a></span>
+    </div>
+    <div class="col-xs-4 centered">
+      <span><a href ng-click="view = BURNDOWN">Burndown</a></span>
+    </div>
+    <div class="col-xs-4 centered">
+      <span><a href ng-click="view = RETROSPECTIVE">Retrospective</a></span>
+    </div>
+  </div>
+
+  <!-- Stories View -->
+  <div class="row" ng-show="view == STORIES">
+    <div class="col-xs-12">
+
+      <table ng-repeat="story in sprint.backlog" ng-if="story.id != 'priority_line'">
+        <tr>
+          <td class="epic-cell">
+            <span class="epic">{{ story.epic }}</span>
+          </td>
+          <td>
+            <span class="text">{{ getLanguage(story).as }}
+              <span ng-repeat="persona in story.personas" class="persona">{{ persona.title }},</span>
+              {{ personalPronoun_want() }} {{ story.goal }}
+              <div ng-show="showEntireStory">
+                <span>{{ getLanguage().so_that }} {{ story.reason }}</span>
+                <div class="userstory-section-container">
+                  <span class="userstory-section">Acceptance Criteria</span>
+                  <ul>
+                    <li ng-repeat="ac in story.acceptanceCriteria">{{ ac }}</li>
+                  </ul>
+                </div>
+                <a href ng-click="showEntireStory=false"><span>[hide details]</span></a>
+              </div>
+              <a href ng-click="showEntireStory=true" ng-show="!showEntireStory">[...]</a>
+            </span>
+          </td>
+          <td>
+            <span class="done" ng-if="storyDone(story)">Done</span>
+            <span class="pending" ng-if="!storyDone(story)">Pending</span>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- Burndown View -->
+  <div class="row" ng-show="view == BURNDOWN">
+    <div class="col-xs-12">
+      <burndown-chart sprint="sprint"></burndown-chart>
+    </div>
+  </div>
+
+  <!-- Retrospective View -->
+  <div class="row" ng-show="view == RETROSPECTIVE">
+    <div class="col-xs-12">
+
+      <div class="row">
+        <div class="col-xs-12">
+          <span>Good</span>
+          <ul>
+            <li ng-repeat="item in sprint.retrospective.good">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <span>Poor</span>
+          <ul>
+            <li ng-repeat="item in sprint.retrospective.poor">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <span>Try</span>
+          <ul>
+            <li ng-repeat="item in sprint.retrospective.try">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <span>Keep</span>
+          <ul>
+            <li ng-repeat="item in sprint.retrospective.keep">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <span>Drop</span>
+          <ul>
+            <li ng-repeat="item in sprint.retrospective.drop">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

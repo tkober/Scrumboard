@@ -1,6 +1,7 @@
 import './burndown.template.html';
 import './burndown.controller.js';
-import './burndown.less';
+
+import '../burndown_chart/burndown_chart.directive.js';
 
 
 angular.module('scrumboard').directive('burndown', function() {

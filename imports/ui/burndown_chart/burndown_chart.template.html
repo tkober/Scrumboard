@@ -1,0 +1,25 @@
+<table class="burndown-chart">
+  <tr>
+    <td class="centered" ng-repeat="day in days"><span>{{ day.counts.total }}</span></td>
+  </tr>
+
+  <tr>
+
+    <td ng-repeat="day in days" style="width: {{ 100 / days.length }}%">
+      <div class="indicator-box">
+        <div class="indicator indicator-max-spacing" style="height: {{ (maximumTaskCount - day.counts.total) / maximumTaskCount * 100 }}%"></div>
+        <div class="indicator indicator-review" style="height: {{ day.counts.review / maximumTaskCount * 100 }}%"></div>
+        <div class="indicator indicator-progress" style="height: {{ day.counts.inProgress / maximumTaskCount * 100 }}%"></div>
+        <div class="indicator indicator-todo" style="height: {{ day.counts.todo / maximumTaskCount * 100 }}%"></div>
+      </div>
+    </td>
+
+  </tr>
+  <tr>
+
+    <td ng-repeat="day in days" class="centered">
+      <span>{{ day.label }}</span>
+    </td>
+
+  </tr>
+</table>

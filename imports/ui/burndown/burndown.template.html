@@ -8,32 +8,10 @@
         <h3>{{ begin | date }} - {{ end | date }}</h3>
       </div>
     </div>
-
     <div class="row">
       <div class="col-xs-12">
 
-        <table class="burndown-chart">
-          <tr>
-            <td class="centered" ng-repeat="day in days"><span>{{ day.taskCount }}</span></td>
-          </tr>
-
-          <tr>
-
-            <td ng-repeat="day in days" style="width: {{ 100 / days.length }}%">
-              <div class="indicator-box">
-                <div class="indicator" style="height: {{ day.taskCount / maximumTaskCount * 100 }}%"></div>
-              </div>
-            </td>
-
-          </tr>
-          <tr>
-
-            <td ng-repeat="day in days" class="centered">
-              <span>{{ day.label }}</span>
-            </td>
-
-          </tr>
-        </table>
+        <burndown-chart sprint="scrum.sprint"></burndown-chart>
 
       </div>
     </div>
