@@ -23,11 +23,11 @@
   </div>
 
   <!-- Stories View -->
-  <div class="row retired-story-container" ng-show="view == STORIES" ng-repeat="story in sprint.backlog" ng-if="story.id != 'priority_line'">
+  <div class="row retired-story-container" ng-show="view == STORIES">
     <div class="col-xs-11">
 
       <table style="width: 0%;">
-        <tr>
+        <tr ng-repeat="story in sprint.backlog" ng-if="story.id != 'priority_line'">
           <td class="epic-cell">
             <span class="epic">{{ story.epic }}</span>
           </td>
