@@ -1,4 +1,5 @@
-<div class="">
+<div class="list-group task-container">
+<div class="list-item not-interactable">
 
   <!-- Header -->
   <div class="row">
@@ -12,22 +13,20 @@
 
   <!-- View Selector -->
   <div class="row">
-    <div class="col-xs-4 centered">
-      <span><a href ng-click="view = STORIES">Stories</a></span>
-    </div>
-    <div class="col-xs-4 centered">
-      <span><a href ng-click="view = BURNDOWN">Burndown</a></span>
-    </div>
-    <div class="col-xs-4 centered">
-      <span><a href ng-click="view = RETROSPECTIVE">Retrospective</a></span>
+    <div class="col-xs-12 centered">
+      <div class="btn-group estimate-box" role="group" aria-label="...">
+        <button type="button" class="btn btn-default estimate-button" ng-class="{ active: view == STORIES }" ng-click="view = STORIES">Stories</button>
+        <button type="button" class="btn btn-default estimate-button" ng-class="{ active: view == BURNDOWN }" ng-click="view = BURNDOWN">Burndown</button>
+        <button type="button" class="btn btn-default estimate-button" ng-class="{ active: view == RETROSPECTIVE }" ng-click="view = RETROSPECTIVE">Retrospective</button>
+      </div>
     </div>
   </div>
 
   <!-- Stories View -->
-  <div class="row" ng-show="view == STORIES">
-    <div class="col-xs-12">
+  <div class="row retired-story-container" ng-show="view == STORIES" ng-repeat="story in sprint.backlog" ng-if="story.id != 'priority_line'">
+    <div class="col-xs-11">
 
-      <table ng-repeat="story in sprint.backlog" ng-if="story.id != 'priority_line'">
+      <table style="width: 0%;">
         <tr>
           <td class="epic-cell">
             <span class="epic">{{ story.epic }}</span>
@@ -49,13 +48,13 @@
               <a href ng-click="showEntireStory=true" ng-show="!showEntireStory">[...]</a>
             </span>
           </td>
-          <td>
-            <span class="done" ng-if="storyDone(story)">Done</span>
-            <span class="pending" ng-if="!storyDone(story)">Pending</span>
-          </td>
         </tr>
       </table>
 
+    </div>
+    <div class="col-xs-1">
+      <span class="done" ng-if="storyDone(story)">Done</span>
+      <span class="pending" ng-if="!storyDone(story)">Pending</span>
     </div>
   </div>
 
@@ -118,4 +117,5 @@
     </div>
   </div>
 
+</div>
 </div>
