@@ -24,14 +24,14 @@
 
   <!-- Stories View -->
   <div class="row retired-story-container" ng-show="view == STORIES">
-    <div class="col-xs-11">
+    <div class="col-xs-12">
 
       <table style="width: 0%;">
         <tr ng-repeat="story in sprint.backlog" ng-if="story.id != 'priority_line'">
           <td class="epic-cell">
             <span class="epic">{{ story.epic }}</span>
           </td>
-          <td>
+          <td style="width: 100%">
             <span class="text">{{ getLanguage(story).as }}
               <span ng-repeat="persona in story.personas" class="persona">{{ persona.title }},</span>
               {{ personalPronoun_want() }} {{ story.goal }}
@@ -48,13 +48,13 @@
               <a href ng-click="showEntireStory=true" ng-show="!showEntireStory">[...]</a>
             </span>
           </td>
+          <td>
+            <span class="done glyphicon glyphicon-ok-sign" ng-if="storyDone(story)"></span>
+            <span class="pending glyphicon glyphicon-remove-sign" ng-if="!storyDone(story)"></span>
+          </td>
         </tr>
       </table>
 
-    </div>
-    <div class="col-xs-1 right">
-      <span class="done glyphicon glyphicon-ok-sign" ng-if="storyDone(story)"></span>
-      <span class="pending glyphicon glyphicon-remove-sign" ng-if="!storyDone(story)"></span>
     </div>
   </div>
 
