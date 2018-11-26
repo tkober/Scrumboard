@@ -62,12 +62,20 @@ angular.module('scrumboard').controller('PlanningController', ['$scope', '$locat
   }
 
   $scope.sprintBacklogEstimate = function() {
+    console.log($scope.scrum);
     var result = 0;
     for (var i = 0; i < $scope.scrum.backlog.length; i++) {
       var story = $scope.scrum.backlog[i];
       if ($scope.scrum.sprint.backlog.indexOf(story.id) != -1) {
-        // console.log(story.id);
-        result += parseInt(story.estimates[Meteor.userId()]);
+
+        for (var key in story.estimates) {
+          if (story.estimates.hasOwnProperty(key)) {
+            if (story.estimates[key] != '*') {
+              result += parseInt(story.estimates[key]);
+              break;
+            }
+          }
+        }
       }
     }
     return result;
