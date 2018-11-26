@@ -641,6 +641,14 @@ if (Meteor.isServer) {
       for (var i = 0; i < scrum.backlog.length; i++) {
         var story = scrum.backlog[i];
         if (scrum.sprint.backlog.indexOf(story.id) != -1) {
+          for (var key in story.estimates) {
+            if (story.estimates.hasOwnProperty(key)) {
+              if (story.estimates[key] != '*') {
+                story.estimate = story.estimates[story.estimates[key]];
+                break;
+              }
+            }
+          }
           story.estimate = story.estimates[Meteor.userId()];
           story.tasks = { todo: [], inProgress: [], review: [], done:[] };
           sprint_backlog.push(story);
