@@ -62,7 +62,6 @@ angular.module('scrumboard').controller('PlanningController', ['$scope', '$locat
   }
 
   $scope.sprintBacklogEstimate = function() {
-    console.log($scope.scrum);
     var result = 0;
     for (var i = 0; i < $scope.scrum.backlog.length; i++) {
       var story = $scope.scrum.backlog[i];

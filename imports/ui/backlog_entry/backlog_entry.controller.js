@@ -5,6 +5,7 @@ import * as langs from '../../api/languages.js';
 angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$location', function($scope, $location) {
   $scope.error = null;
   $scope.isDeleting = false;
+  $scope.hideDetails = $scope.initialHideDetails == undefined ? false : $scope.initialHideDetails;
 
   $scope.shouldShowStartDragging = function() {
     return $scope.allowDragging;
@@ -215,6 +216,10 @@ angular.module('scrumboard').controller('BacklogEntryController', ['$scope', '$l
       }
     }
     return langs.EN;
+  };
+
+  $scope.toggleDetails = function() {
+    $scope.hideDetails = !$scope.hideDetails;
   };
 
 }]);

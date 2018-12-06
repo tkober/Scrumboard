@@ -11,6 +11,9 @@ angular.module('scrumboard').directive('backlogEntry', function() {
       userstory: '=',
       scrum: '=',
       planning: '=',
+      initialHideDetails: '=',
+      detailsStateLocked: '=',
+      itemIndex: '=',
 
       // Dragging
       allowDragging: '=',

@@ -69,7 +69,7 @@
     <div ng-if="planningStarted()">
 
       <div ng-if="isPartOfPlanning()">
-        <backlog-entry ng-repeat="story in scrum.backlog" userstory="story" scrum="scrum" planning="true"></backlog-entry>
+        <backlog-entry ng-repeat="story in scrum.backlog" userstory="story" scrum="scrum" planning="true" details-state-locked="true" item-index="$index"></backlog-entry>
 
         <nav class="navbar navbar-inverse navbar-fixed-bottom">
             <div class="container">

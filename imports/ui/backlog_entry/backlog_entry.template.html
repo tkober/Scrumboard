@@ -16,6 +16,7 @@
     <table style="width: 100%">
       <tr>
         <td>
+          <span><b>#{{ itemIndex+1 }}</b></span>
           <span class="epciName">
             <span class="glyphicon glyphicon-tag"></span> {{ userstory.epic }}
           </span>
@@ -80,50 +81,62 @@
       </div>
     </div>
 
-    <!-- ACC -->
-    <div class="row">
-      <div class="col-xs-12 userstory-section-container">
-        <span class="userstory-section">Acceptance Criteria</span>
-      </div>
-    </div>
-    <div class="row">
+    <!-- Details -->
+    <div class="row" ng-hide="hideDetails">
       <div class="col-xs-12">
-        <ul>
-          <li ng-repeat="ac in userstory.acceptanceCriteria">
-            <span class="userstory-text">{{ ac }}</span>
-          </li>
-        </ul>
-      </div>
-    </div>
 
-    <!-- Estimate -->
-    <div class="row">
-      <div class="col-xs-12 userstory-section-container">
-        <span class="userstory-section">Estimate</span>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="btn-group estimate-box" role="group" aria-label="..." ng-if="showEstimatePanel()">
-          <button type="button" class="btn btn-default estimate-button" ng-class="{ active: isMyEstimate(e) }" ng-repeat="e in ESTIMATES" ng-click="estimate(e)">{{ e }}</button>
-        </div>
-
-        <div class="" ng-if="!showEstimatePanel() && missingEstimatesCount() > 0">
-          <span>{{ missingEstimatesCount() }} {{ missingEstimatesCount() > 1 ? "persons" : "person" }} pending</span>
-        </div>
-
-        <div class="" ng-if="!showEstimatePanel() && missingEstimatesCount() == 0">
-          <div ng-if="!compliantEstimate()">
-            <span ng-show="!isUnclear()">{{ minimumEstimate() }}</span>
-            <span ng-show="!isUnclear()"> - </span>
-            <span>{{ isUnclear() ? '?' : maximumEstimate() }}</span>
-            <span> ({{ myEstimate() }})</span>
-          </div>
-          <div ng-if="compliantEstimate()">
-            <span>{{ minimumEstimate() }}</span>
-            <span> spts</span>
+        <!-- ACC -->
+        <div class="row">
+          <div class="col-xs-12 userstory-section-container">
+            <span class="userstory-section">Acceptance Criteria</span>
           </div>
         </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <ul>
+              <li ng-repeat="ac in userstory.acceptanceCriteria">
+                <span class="userstory-text">{{ ac }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Estimate -->
+        <div class="row">
+          <div class="col-xs-12 userstory-section-container">
+            <span class="userstory-section">Estimate</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="btn-group estimate-box" role="group" aria-label="..." ng-if="showEstimatePanel()">
+              <button type="button" class="btn btn-default estimate-button" ng-class="{ active: isMyEstimate(e) }" ng-repeat="e in ESTIMATES" ng-click="estimate(e)">{{ e }}</button>
+            </div>
+
+            <div class="" ng-if="!showEstimatePanel() && missingEstimatesCount() > 0">
+              <span>{{ missingEstimatesCount() }} {{ missingEstimatesCount() > 1 ? "persons" : "person" }} pending</span>
+            </div>
+
+            <div class="" ng-if="!showEstimatePanel() && missingEstimatesCount() == 0">
+              <div ng-if="!compliantEstimate()">
+                <span ng-show="!isUnclear()">{{ minimumEstimate() }}</span>
+                <span ng-show="!isUnclear()"> - </span>
+                <span>{{ isUnclear() ? '?' : maximumEstimate() }}</span>
+                <span> ({{ myEstimate() }})</span>
+              </div>
+              <div ng-if="compliantEstimate()">
+                <span>{{ minimumEstimate() }}</span>
+                <span> spts</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row" ng-hide="detailsStateLocked">
+      <div class="col-xs-12 centered">
+        <a href ng-click="toggleDetails()">{{ hideDetails ? 'show details' : 'hide details' }}</a>
       </div>
     </div>
 
