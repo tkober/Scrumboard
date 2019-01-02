@@ -1,10 +1,13 @@
 import '../backlog_entry/backlog_entry.directive.js';
+import Epics from '../Epics.js';
 
 
 angular.module('scrumboard').controller('BacklogController', ['$scope', '$reactive', '$location', function($scope, $reactive, $location) {
 
   $scope.showPlacementMarks = true;
   $scope.storyToDrag = null;
+
+  $scope.epics = new Epics($scope.scrum.backlog);
 
   $scope.createUserStory = function() {
     $location.path('/scrums/' + $scope.scrum._id + '/backlog/story');

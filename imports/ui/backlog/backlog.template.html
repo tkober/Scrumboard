@@ -18,6 +18,7 @@
     <backlog-entry ng-repeat="story in scrum.backlog"
       userstory="story"
       scrum="scrum"
+      epics="epics"
       allow-dragging="true && !storyToDrag"
       show-placement-markers="storyToDrag"
       on-start-dragging="onStartDragging"

@@ -3,7 +3,7 @@
     <table>
       <tr>
         <td class="epic-cell">
-          <span class="epic">{{ story.epic }}</span>
+          <span class="epic" style="background-color: {{ epics.cssColorForEpic(story.epic) }}">{{ story.epic.toUpperCase() }}</span>
         </td>
         <td>
           <span class="text" ng-if="story.id != 'priority_line'">{{ getLanguage().as }}

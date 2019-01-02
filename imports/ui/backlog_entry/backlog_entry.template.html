@@ -17,8 +17,9 @@
       <tr>
         <td>
           <span><b>#{{ itemIndex+1 }}</b></span>
-          <span class="epciName">
-            <span class="glyphicon glyphicon-tag"></span> {{ userstory.epic }}
+          <span class="epicName" style="background-color: {{ epics.cssColorForEpic(userstory.epic) }}">
+            <!-- <span class="glyphicon glyphicon-tag"></span> -->
+            <span>{{ userstory.epic }}</span>
           </span>
         </td>
         <td class="right">

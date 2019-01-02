@@ -10,7 +10,8 @@ angular.module('scrumboard').directive('taskrow', function() {
     scope: {
       scrum: '=',
       story: '=',
-      cresteTaskCall: '='
+      cresteTaskCall: '=',
+      epics: '='
     }
   };
 });
