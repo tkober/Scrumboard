@@ -1,5 +1,6 @@
 import '../backlog_entry/backlog_entry.directive.js';
 import './planning.less';
+import Epics from '../Epics.js';
 
 
 angular.module('scrumboard').controller('PlanningController', ['$scope', '$location', '$reactive', '$window', function($scope, $location, $reactive, $window) {
@@ -9,6 +10,8 @@ angular.module('scrumboard').controller('PlanningController', ['$scope', '$locat
   var default_duration_days = 14;
   $scope.to = new Date();
   $scope.to.setTime($scope.to.getTime() + (default_duration_days * 24 * 60 * 60 * 1000));
+
+  $scope.epics = new Epics($scope.scrum.backlog);
 
   $scope.allParticipants = []
   $scope.participatesInPlanning = {}
