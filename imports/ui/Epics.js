@@ -46,7 +46,7 @@ class Epics {
     if (hsl === undefined) {
       hsl = this.hslColor(0, 100, 100);
     }
-    let result = "hsla(" + hsl.h + ", " + hsl.s + "%, " + hsl.l + "%, 0.85)";
+    let result = "hsla(" + hsl.h + ", " + hsl.s + "%, " + hsl.l + "%, 0.65)";
     return result;
   }
 }
